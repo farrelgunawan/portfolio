@@ -3,256 +3,1084 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Production Improvement Dashboard — Farrel Gunawan</title>
+<title>Operations Portfolio — Farrel Gunawan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f5f5f3;color:#1a1a1a;padding:2rem 1rem}
-.container{max-width:900px;margin:0 auto;background:#fff;border-radius:12px;padding:2rem;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
-.header-meta{font-size:12px;color:#888;margin-bottom:4px}
-.title{font-size:22px;font-weight:600;color:#1a1a1a;margin-bottom:4px}
-.subtitle{font-size:13px;color:#666;margin-bottom:1rem}
-.badge-row{display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap}
-.badge{font-size:11px;padding:3px 10px;border-radius:6px;font-weight:500}
-.badge-before{background:#FCEBEB;color:#791F1F}
-.badge-after{background:#EAF3DE;color:#27500A}
-.badge-method{background:#E6F1FB;color:#0C447C}
-.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem}
-.kpi{background:#f5f5f3;border-radius:8px;padding:12px 14px}
-.kpi-label{font-size:11px;color:#666;margin-bottom:6px}
-.kpi-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-.kpi-before{font-size:13px;color:#A32D2D;text-decoration:line-through}
-.kpi-after{font-size:20px;font-weight:600;color:#3B6D11}
-.kpi-delta{font-size:11px;color:#3B6D11;background:#EAF3DE;padding:2px 6px;border-radius:4px}
-.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.chart-card{background:#fff;border:1px solid #e8e8e6;border-radius:10px;padding:14px}
-.chart-card.full{grid-column:1/-1}
-.chart-title{font-size:12px;font-weight:500;color:#1a1a1a;margin-bottom:10px}
-.legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;font-size:11px;color:#666}
-.legend span{display:flex;align-items:center;gap:4px}
-.leg-dot{width:10px;height:10px;border-radius:2px;display:inline-block}
-.divider{border:none;border-top:1px solid #e8e8e6;margin:2rem 0}
-.section-title{font-size:16px;font-weight:600;color:#1a1a1a;margin-bottom:4px}
-.section-sub{font-size:12px;color:#666;margin-bottom:1.25rem}
-.root-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem}
-.root-card{background:#f9f9f8;border-radius:8px;padding:10px 12px;border-left:3px solid}
-.root-card.rc1{border-color:#E24B4A}
-.root-card.rc2{border-color:#EF9F27}
-.root-card.rc3{border-color:#378ADD}
-.root-label{font-size:10px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
-.root-text{font-size:12px;color:#1a1a1a;line-height:1.5}
-.phase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.25rem}
-.phase-card{border:1px solid #e8e8e6;border-radius:10px;padding:14px;background:#fff}
-.phase-card.full{grid-column:1/-1}
-.phase-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.phase-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px}
-.phase-d{background:#E6F1FB;color:#0C447C}
-.phase-m{background:#EAF3DE;color:#27500A}
-.phase-a{background:#FAEEDA;color:#633806}
-.phase-i{background:#EEEDFE;color:#3C3489}
-.phase-c{background:#E1F5EE;color:#085041}
-.phase-name{font-size:13px;font-weight:500;color:#1a1a1a}
-.phase-problem{font-size:11px;color:#888;margin-bottom:8px;font-style:italic;line-height:1.4}
-.phase-items{display:flex;flex-direction:column;gap:5px}
-.phase-item{font-size:12px;color:#1a1a1a;display:flex;gap:6px;line-height:1.5}
-.phase-item-dot{color:#aaa;flex-shrink:0}
-.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:1.25rem}
-.result-card{background:#f5f5f3;border-radius:8px;padding:12px 14px;border-top:3px solid #3B6D11}
-.result-metric{font-size:22px;font-weight:600;color:#3B6D11;margin-bottom:2px}
-.result-label{font-size:11px;color:#666;line-height:1.4}
-@media(max-width:600px){
-  .kpi-grid,.charts-row,.root-grid,.phase-grid,.result-grid{grid-template-columns:1fr}
-  .chart-card.full,.phase-card.full{grid-column:1}
-  body{padding:1rem .5rem}
-  .container{padding:1.25rem}
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F6F3;
+    --surface: #FFFFFF;
+    --surface2: #F0EEE9;
+    --border: #E2DED7;
+    --text-primary: #1A1917;
+    --text-secondary: #6B6860;
+    --text-muted: #9E9C97;
+    --accent: #1A6B4A;
+    --accent-light: #E8F4EF;
+    --accent2: #C8440A;
+    --accent2-light: #FDF0EB;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141412;
+      --surface: #1E1D1A;
+      --surface2: #252420;
+      --border: #2E2C28;
+      --text-primary: #F0EDE8;
+      --text-secondary: #9E9A93;
+      --text-muted: #6B6860;
+      --accent: #3EBD7A;
+      --accent-light: #0D2B1E;
+      --accent2: #F07040;
+      --accent2-light: #2B1508;
+    }
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+  }
+  .nav-name {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+
+  /* HERO */
+  .hero {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4rem;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 span {
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 560px;
+    margin-bottom: 2rem;
+  }
+  .hero-contact {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 0.45rem 0.9rem;
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .contact-link:hover {
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+    background: var(--surface);
+  }
+  .contact-link svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+  /* PROJECT INDEX */
+  .project-index {
+    max-width: 780px;
+    margin: 0 auto 2rem;
+    padding: 0 2rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .proj-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .proj-pill {
+    font-size: 12px;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .proj-pill:hover { color: var(--text-primary); border-color: var(--text-secondary); }
+
+  /* DIVIDER */
+  .divider {
+    max-width: 780px;
+    margin: 0 auto 4rem;
+    padding: 0 2rem;
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* SECTION LAYOUT */
+  .section {
+    max-width: 780px;
+    margin: 0 auto 6rem;
+    padding: 0 2rem;
+  }
+
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.4rem;
+  }
+  .section-meta {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+
+  /* KPI GRID */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+  .kpi-cell {
+    background: var(--surface);
+    padding: 1.25rem 1.25rem 1rem;
+  }
+  .kpi-label {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .kpi-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.3rem;
+  }
+  .kpi-before {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: line-through;
+    text-decoration-color: var(--border);
+  }
+  .kpi-after {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .kpi-delta {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-top: 0.25rem;
+  }
+  .delta-good { background: var(--accent-light); color: var(--accent); }
+  .delta-bad-good { background: var(--accent2-light); color: var(--accent2); }
+
+  /* CHARTS ROW */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+  .chart-cell {
+    background: var(--surface);
+    padding: 1.25rem;
+  }
+  .chart-cell.full-width {
+    grid-column: 1 / -1;
+  }
+  .chart-label {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+  .chart-legend {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  @media (max-width: 560px) {
+    .charts-row { grid-template-columns: 1fr; }
+    .chart-cell.full-width { grid-column: 1; }
+  }
+
+  /* DMAIC */
+  .dmaic-wrap {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+  .dmaic-step {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+  .dmaic-step:last-child { border-bottom: none; }
+  .dmaic-code {
+    background: var(--surface2);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    border-right: 1px solid var(--border);
+  }
+  .dmaic-letter {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .dmaic-phase {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  .dmaic-content {
+    padding: 1.25rem;
+  }
+  .dmaic-summary {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+  .dmaic-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .dmaic-list li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding-left: 1rem;
+    position: relative;
+  }
+  .dmaic-list li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--text-muted);
+  }
+  @media (max-width: 560px) {
+    .dmaic-step { grid-template-columns: 1fr; }
+    .dmaic-code { border-right: none; border-bottom: 1px solid var(--border); flex-direction: row; align-items: center; gap: 0.75rem; }
+  }
+
+  /* ROOT CAUSE */
+  .rc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+  .rc-cell {
+    background: var(--surface);
+    padding: 1.25rem;
+  }
+  .rc-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent2);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .rc-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* SHIFT CASE: COMPARISON TABLE */
+  .shift-compare {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+  .shift-compare table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .shift-compare thead th {
+    background: var(--surface2);
+    padding: 0.85rem 1rem;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+  .shift-compare thead th:not(:first-child) { text-align: right; }
+  .shift-compare tbody td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    vertical-align: middle;
+  }
+  .shift-compare tbody tr:last-child td { border-bottom: none; }
+  .shift-compare tbody td:first-child { color: var(--text-primary); font-weight: 500; }
+  .shift-compare tbody td:not(:first-child) { text-align: right; font-family: var(--mono); }
+  .td-before { color: var(--text-muted) !important; }
+  .td-after { color: var(--text-primary) !important; }
+  .td-delta-good { color: var(--accent) !important; }
+
+  /* INTERVENTION STEPS */
+  .steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+  .step-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    align-items: flex-start;
+  }
+  .step-item:last-child { border-bottom: none; }
+  .step-n {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    min-width: 28px;
+    padding-top: 2px;
+    letter-spacing: 0.06em;
+  }
+  .step-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .step-text strong { color: var(--text-primary); font-weight: 500; }
+
+  /* RESULT STRIP */
+  .result-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+  .result-cell {
+    background: var(--surface);
+    padding: 1.25rem;
+    text-align: center;
+  }
+  .result-num {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+  .result-label {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.5;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="header-meta">Portfolio Project 1 — Production Operations</div>
-  <div class="title">Production Performance Dashboard</div>
-  <div class="subtitle">PT. Prima Jaya Fenolik Melamin &nbsp;·&nbsp; Melamine Tableware Manufacturing &nbsp;·&nbsp; Aug 2024 – Jan 2025</div>
 
-  <div class="badge-row">
-    <span class="badge badge-before">Before: Aug–Sep 2024</span>
-    <span class="badge badge-method">Six Sigma DMAIC — Oct 2024</span>
-    <span class="badge badge-after">After: Nov 2024 – Jan 2025</span>
+<nav>
+  <a class="nav-name" href="#">Farrel Gunawan</a>
+  <ul class="nav-links">
+    <li><a href="#project-1">Project 1</a></li>
+    <li><a href="#project-2">Project 2</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <p class="hero-eyebrow">Operations Portfolio</p>
+  <h1>Turning production data<br>into <span>measurable results</span></h1>
+  <p class="hero-sub">Production Planning &amp; Performance Manager with a background in industrial engineering and data analytics. These case studies document real improvement projects — with real numbers.</p>
+  <div class="hero-contact" id="contact">
+    <a class="contact-link" href="https://www.linkedin.com/in/farrel-gunawan/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn — Farrel Gunawan
+    </a>
   </div>
+</header>
 
-  <div class="kpi-grid">
-    <div class="kpi">
-      <div class="kpi-label">Avg daily output (pcs)</div>
-      <div class="kpi-row"><span class="kpi-before">~25,000</span><span class="kpi-after">~30,200</span><span class="kpi-delta">+20%</span></div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Defect rate</div>
-      <div class="kpi-row"><span class="kpi-before">15–20%</span><span class="kpi-after">9–14%</span><span class="kpi-delta">−6pp</span></div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Avg downtime / day</div>
-      <div class="kpi-row"><span class="kpi-before">~5.0 hrs</span><span class="kpi-after">~4.5 hrs</span><span class="kpi-delta">−10%</span></div>
-    </div>
-  </div>
-
-  <div class="charts-row">
-    <div class="chart-card full">
-      <div class="chart-title">Daily output (pcs) — before vs after improvement</div>
-      <div class="legend">
-        <span><span class="leg-dot" style="background:#888780"></span>Before (Aug–Sep)</span>
-        <span><span class="leg-dot" style="background:#185FA5"></span>After (Nov–Jan)</span>
-        <span><span class="leg-dot" style="background:rgba(226,75,74,0.5)"></span>Target 30,000</span>
-      </div>
-      <div style="position:relative;height:220px"><canvas id="c1"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">Defect rate (%) — monthly trend</div>
-      <div style="position:relative;height:190px"><canvas id="c2"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">Downtime by cause (hrs/day avg)</div>
-      <div class="legend" id="dt-legend"></div>
-      <div style="position:relative;height:170px"><canvas id="c3"></canvas></div>
-    </div>
-  </div>
-  <div class="charts-row">
-    <div class="chart-card">
-      <div class="chart-title">OEE (%) — monthly trend</div>
-      <div style="position:relative;height:180px"><canvas id="c4"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">Output by shift — before vs after</div>
-      <div class="legend">
-        <span><span class="leg-dot" style="background:#888780"></span>Before</span>
-        <span><span class="leg-dot" style="background:#185FA5"></span>After</span>
-      </div>
-      <div style="position:relative;height:180px"><canvas id="c5"></canvas></div>
-    </div>
-  </div>
-
-  <hr class="divider">
-
-  <div class="section-title">Improvement case study</div>
-  <div class="section-sub">Six Sigma DMAIC — PT. Prima Jaya Fenolik Melamin, October 2024</div>
-
-  <div class="root-grid">
-    <div class="root-card rc1">
-      <div class="root-label">Root cause 1</div>
-      <div class="root-text">Operators changing machine parameters independently — no standardized settings per product type</div>
-    </div>
-    <div class="root-card rc2">
-      <div class="root-label">Root cause 2</div>
-      <div class="root-text">Operators not following SOPs consistently — process execution varied across shifts</div>
-    </div>
-    <div class="root-card rc3">
-      <div class="root-label">Root cause 3</div>
-      <div class="root-text">Incoming raw material quality inconsistent across batches from the same supplier</div>
-    </div>
-  </div>
-
-  <div class="phase-grid">
-    <div class="phase-card">
-      <div class="phase-header"><span class="phase-badge phase-d">Define</span><span class="phase-name">Problem scoping</span></div>
-      <div class="phase-problem">High defect rate (15–20%) and below-target output (~25,000 pcs/day) across 2 shifts</div>
-      <div class="phase-items">
-        <div class="phase-item"><span class="phase-item-dot">·</span><span>Defined project scope: defect reduction and output improvement across 70 machines, 2 shifts</span></div>
-        <div class="phase-item"><span class="phase-item-dot">·</span><span>Set targets: defect rate below 15%, output consistently at or above 30,000 pcs/day</span></div>
-      </div>
-    </div>
-    <div class="phase-card">
-      <div class="phase-header"><span class="phase-badge phase-m">Measure</span><span class="phase-name">Data collection</span></div>
-      <div class="phase-problem">Established baseline metrics before any changes were made</div>
-      <div class="phase-items">
-        <div class="phase-item"><span class="phase-item-dot">·</span><span>Collected daily output, defect type, and downtime data per machine and per shift</span></div>
-        <div class="phase-item"><span class="phase-item-dot">·</span><span>Tracked machine parameter settings across operators to identify variation patterns</span></div>
-        <div class="phase-item"><span class="phase-item-dot">·</span><span>Logged raw material batch quality on arrival to identify correlation with defect spikes</span></div>
-      </div>
-    </div>
-    <div class="phase-card">
-      <div class="phase-header"><span class="phase-badge phase-a">Analyze</span><span class="phase-name">Root cause analysis</span></div>
-      <div class="phase-problem">Identified three primary drivers of defects and output loss</div>
-      <div class="phase-items">
-        <div class="phase-item"><span class="phase-item-dot">·</span><span>Parameter deviation by operators correlated directly with defect rate spikes on specific machines</span></div>
-        <div class="phase-item"><span class="phase-item-dot">·</span><span>SOP non-compliance varied significantly between shifts — inconsistent process execution</span></div>
-        <div class="phase-item"><span class="phase-item-dot">·</span><span>Batch-to-batch material quality variation identified as a trigger for unplanned defect increases</span></div>
-      </div>
-    </div>
-    <div class="phase-card">
-      <div class="phase-header"><span class="phase-badge phase-i">Improve</span><span class="phase-name">Interventions</span></div>
-      <div class="phase-problem">Four concrete changes implemented in October 2024</div>
-      <div class="phase-items">
-        <div class="phase-item"><span class="phase-item-dot">·</span><span>Standardized machine parameters per product type — operators prohibited from adjusting settings independently</span></div>
-        <div class="phase-item"><span class="phase-item-dot">·</span><span>Implemented incoming material quality check before raw material enters the production floor</span></div>
-        <div class="phase-item"><span class="phase-item-dot">·</span><span>Rescheduled production priorities based on available material quality — batches with quality issues deprioritized</span></div>
-        <div class="phase-item"><span class="phase-item-dot">·</span><span>Rebalanced operator composition across shifts to distribute experienced operators more evenly</span></div>
-      </div>
-    </div>
-    <div class="phase-card full">
-      <div class="phase-header"><span class="phase-badge phase-c">Control</span><span class="phase-name">Sustaining the improvement</span></div>
-      <div class="phase-problem">Monitoring systems put in place to detect regression early</div>
-      <div class="phase-items">
-        <div class="phase-item"><span class="phase-item-dot">·</span><span>Built a real-time production KPI dashboard (Power BI) — tracking output, defect rate, downtime, and OEE daily; adopted by management as primary monitoring tool</span></div>
-        <div class="phase-item"><span class="phase-item-dot">·</span><span>Process documentation updated and aligned with ISO 9001:2015 standards to formalize the new parameter standards and material handling procedures</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="result-grid">
-    <div class="result-card"><div class="result-metric">+20%</div><div class="result-label">Output increase — ~25,000 to ~30,200 pcs/day</div></div>
-    <div class="result-card"><div class="result-metric">−6pp</div><div class="result-label">Defect rate — 15–20% down to 9–14%</div></div>
-    <div class="result-card"><div class="result-metric">−10%</div><div class="result-label">Downtime reduction — ~5.0 hrs to ~4.5 hrs/day</div></div>
-  </div>
+<div class="project-index">
+  <span class="proj-tag">Case studies ·</span>
+  <a class="proj-pill" href="#project-1">01 — Six Sigma DMAIC · Production Output</a>
+  <a class="proj-pill" href="#project-2">02 — Workforce Rebalancing · Shift Equity</a>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════════
+     PROJECT 1 — DMAIC PRODUCTION IMPROVEMENT
+═══════════════════════════════════════════════ -->
+<section class="section" id="project-1">
+
+  <div class="section-header">
+    <p class="section-num">Project 01 · Production Operations</p>
+    <h2 class="section-title">Six Sigma DMAIC — Production Performance</h2>
+    <p class="section-meta">PT. Prima Jaya Fenolik Melamin · Melamine Tableware · Oct 2024 → Jan 2025</p>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi-cell">
+      <p class="kpi-label">Avg daily output</p>
+      <div class="kpi-row">
+        <span class="kpi-before">~25,000</span>
+        <span class="kpi-after">~30,200</span>
+        <span style="font-size:11px;color:var(--text-muted);">pcs</span>
+      </div>
+      <span class="kpi-delta delta-good">+20%</span>
+    </div>
+    <div class="kpi-cell">
+      <p class="kpi-label">Defect rate</p>
+      <div class="kpi-row">
+        <span class="kpi-before">15–20%</span>
+        <span class="kpi-after">9–14%</span>
+      </div>
+      <span class="kpi-delta delta-good">−6 pp</span>
+    </div>
+    <div class="kpi-cell">
+      <p class="kpi-label">Avg downtime / day</p>
+      <div class="kpi-row">
+        <span class="kpi-before">~5.0 hrs</span>
+        <span class="kpi-after">~4.5 hrs</span>
+      </div>
+      <span class="kpi-delta delta-good">−10%</span>
+    </div>
+    <div class="kpi-cell">
+      <p class="kpi-label">OEE</p>
+      <div class="kpi-row">
+        <span class="kpi-before">63%</span>
+        <span class="kpi-after">73%</span>
+      </div>
+      <span class="kpi-delta delta-good">+10 pp</span>
+    </div>
+  </div>
+
+  <!-- Charts row -->
+  <div class="charts-row">
+    <div class="chart-cell full-width">
+      <p class="chart-label">Daily output (pcs) — before vs after DMAIC</p>
+      <div class="chart-legend">
+        <span class="legend-item"><span class="legend-dot" style="background:#9E9A93;"></span>Before (Aug–Sep 2024)</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#1A6B4A;"></span>After (Nov 2024–Jan 2025)</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#C8440A; border-radius:0; height:2px;"></span>Target</span>
+      </div>
+      <div style="position:relative;width:100%;height:220px;">
+        <canvas id="outputChart" role="img" aria-label="Bar chart comparing daily production output before and after DMAIC. Before avg 25000 pcs, after avg 30200 pcs, target 30000.">Before avg ~25,000 pcs/day; after avg ~30,200 pcs/day; target 30,000 pcs/day.</canvas>
+      </div>
+    </div>
+    <div class="chart-cell">
+      <p class="chart-label">Defect rate (%) — monthly</p>
+      <div class="chart-legend">
+        <span class="legend-item"><span class="legend-dot" style="background:#C8440A;"></span>Defect rate</span>
+      </div>
+      <div style="position:relative;width:100%;height:180px;">
+        <canvas id="defectChart" role="img" aria-label="Line chart of monthly defect rate. Aug 17%, Sep 16%, Oct improvement, Nov 12%, Dec 11%, Jan 10%.">Defect rate dropped from 15–20% range to 9–14% range after October 2024 interventions.</canvas>
+      </div>
+    </div>
+    <div class="chart-cell">
+      <p class="chart-label">OEE (%) — monthly</p>
+      <div class="chart-legend">
+        <span class="legend-item"><span class="legend-dot" style="background:#1A6B4A;"></span>OEE</span>
+      </div>
+      <div style="position:relative;width:100%;height:180px;">
+        <canvas id="oeeChart" role="img" aria-label="Line chart showing OEE improvement from 63% baseline to 73% after DMAIC interventions.">OEE improved from 63% baseline (Aug–Sep 2024) to 73% (Jan 2025).</canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Root Causes -->
+  <div class="rc-grid">
+    <div class="rc-cell">
+      <p class="rc-num">Root cause 01</p>
+      <p class="rc-text">Operators adjusting machine parameters independently — no standardized settings per product type</p>
+    </div>
+    <div class="rc-cell">
+      <p class="rc-num">Root cause 02</p>
+      <p class="rc-text">Inconsistent SOP compliance across shifts — process execution varied by operator and shift team</p>
+    </div>
+    <div class="rc-cell">
+      <p class="rc-num">Root cause 03</p>
+      <p class="rc-text">Incoming raw material quality varied across batches from the same supplier</p>
+    </div>
+  </div>
+
+  <!-- DMAIC -->
+  <div class="dmaic-wrap">
+    <div class="dmaic-step">
+      <div class="dmaic-code">
+        <span class="dmaic-letter">D</span>
+        <span class="dmaic-phase">Define</span>
+      </div>
+      <div class="dmaic-content">
+        <p class="dmaic-summary">Problem scoping — high defect rate and below-target output</p>
+        <ul class="dmaic-list">
+          <li>Defined scope: defect reduction and output improvement across 70 machines, 2 shifts</li>
+          <li>Set targets: defect rate below 15%, output consistently ≥30,000 pcs/day</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dmaic-step">
+      <div class="dmaic-code">
+        <span class="dmaic-letter">M</span>
+        <span class="dmaic-phase">Measure</span>
+      </div>
+      <div class="dmaic-content">
+        <p class="dmaic-summary">Established baseline metrics before any changes were made</p>
+        <ul class="dmaic-list">
+          <li>Collected daily output, defect type, and downtime data per machine and per shift</li>
+          <li>Tracked machine parameter settings across operators to identify variation patterns</li>
+          <li>Logged raw material batch quality on arrival to correlate with defect spikes</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dmaic-step">
+      <div class="dmaic-code">
+        <span class="dmaic-letter">A</span>
+        <span class="dmaic-phase">Analyze</span>
+      </div>
+      <div class="dmaic-content">
+        <p class="dmaic-summary">Identified three primary drivers of defects and output loss</p>
+        <ul class="dmaic-list">
+          <li>Parameter deviation correlated directly with defect spikes on specific machines</li>
+          <li>SOP non-compliance varied significantly between shifts</li>
+          <li>Batch-to-batch material variation triggered unplanned defect increases</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dmaic-step">
+      <div class="dmaic-code">
+        <span class="dmaic-letter">I</span>
+        <span class="dmaic-phase">Improve</span>
+      </div>
+      <div class="dmaic-content">
+        <p class="dmaic-summary">Four concrete interventions implemented, October 2024</p>
+        <ul class="dmaic-list">
+          <li>Standardized machine parameters per product type — operators prohibited from adjusting independently</li>
+          <li>Implemented incoming material quality inspection before raw material enters production floor</li>
+          <li>Rescheduled production priorities based on available material quality — low-quality batches deprioritized</li>
+          <li>Rebalanced operator composition across shifts to distribute senior operators more evenly (see Project 02)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dmaic-step">
+      <div class="dmaic-code">
+        <span class="dmaic-letter">C</span>
+        <span class="dmaic-phase">Control</span>
+      </div>
+      <div class="dmaic-content">
+        <p class="dmaic-summary">Monitoring systems to detect regression early</p>
+        <ul class="dmaic-list">
+          <li>Built real-time KPI dashboard in Power BI — tracking output, defect rate, downtime, and OEE daily; adopted by management as primary monitoring tool</li>
+          <li>Process documentation updated and aligned with ISO 9001:2015 to formalize parameter standards and material handling procedures</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-strip">
+    <div class="result-cell">
+      <p class="result-num">+20%</p>
+      <p class="result-label">Output increase<br>25k → 30.2k pcs/day</p>
+    </div>
+    <div class="result-cell">
+      <p class="result-num">−6pp</p>
+      <p class="result-label">Defect rate<br>15–20% → 9–14%</p>
+    </div>
+    <div class="result-cell">
+      <p class="result-num">−10%</p>
+      <p class="result-label">Downtime<br>5.0 → 4.5 hrs/day</p>
+    </div>
+    <div class="result-cell">
+      <p class="result-num">+10pp</p>
+      <p class="result-label">OEE improvement<br>63% → 73%</p>
+    </div>
+  </div>
+
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════════
+     PROJECT 2 — SHIFT WORKFORCE REBALANCING
+═══════════════════════════════════════════════ -->
+<section class="section" id="project-2">
+
+  <div class="section-header">
+    <p class="section-num">Project 02 · Workforce Optimization</p>
+    <h2 class="section-title">Shift Rebalancing — Operator Composition</h2>
+    <p class="section-meta">PT. Prima Jaya Fenolik Melamin · July 2024 · Excel + Power BI + Manual Scheduling</p>
+  </div>
+
+  <p style="font-size:13px;color:var(--text-secondary);margin-bottom:2rem;padding:1rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;border-left:3px solid var(--accent);">
+    <strong style="color:var(--text-primary);font-weight:500;">Context:</strong> This project preceded the DMAIC initiative by three months. Shift output imbalance was one of the root causes surfaced later in the Analyze phase. Operator rebalancing was subsequently embedded as one of the four Improve-phase interventions in Project 01.
+  </p>
+
+  <!-- KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi-cell">
+      <p class="kpi-label">Shift 1 avg output</p>
+      <div class="kpi-row">
+        <span class="kpi-before">~11,000</span>
+        <span class="kpi-after">~14,500</span>
+        <span style="font-size:11px;color:var(--text-muted);">pcs</span>
+      </div>
+      <span class="kpi-delta delta-good">+32%</span>
+    </div>
+    <div class="kpi-cell">
+      <p class="kpi-label">Output gap (S1 vs S2)</p>
+      <div class="kpi-row">
+        <span class="kpi-before">~4,000</span>
+        <span class="kpi-after">~1,200</span>
+        <span style="font-size:11px;color:var(--text-muted);">pcs</span>
+      </div>
+      <span class="kpi-delta delta-good">−70%</span>
+    </div>
+    <div class="kpi-cell">
+      <p class="kpi-label">Overtime days / month</p>
+      <div class="kpi-row">
+        <span class="kpi-before">~2×</span>
+        <span class="kpi-after">0×</span>
+      </div>
+      <span class="kpi-delta delta-good">Eliminated</span>
+    </div>
+  </div>
+
+  <!-- Comparison table -->
+  <div class="shift-compare">
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Shift 1 — Before</th>
+          <th>Shift 1 — After</th>
+          <th>Shift 2 — Before</th>
+          <th>Shift 2 — After</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Senior operators</td>
+          <td class="td-before">5</td>
+          <td class="td-after td-delta-good">8</td>
+          <td class="td-before">12</td>
+          <td class="td-after">9</td>
+        </tr>
+        <tr>
+          <td>Avg output (pcs)</td>
+          <td class="td-before">~11,000</td>
+          <td class="td-after td-delta-good">~14,500</td>
+          <td class="td-before">~15,000</td>
+          <td class="td-after">~15,700</td>
+        </tr>
+        <tr>
+          <td>OT incidence</td>
+          <td class="td-before">~2× / month</td>
+          <td class="td-after td-delta-good">None</td>
+          <td class="td-before">Occasional</td>
+          <td class="td-after">None</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Chart: shift output before/after -->
+  <div class="charts-row">
+    <div class="chart-cell full-width">
+      <p class="chart-label">Output per shift — before vs after rebalancing</p>
+      <div class="chart-legend">
+        <span class="legend-item"><span class="legend-dot" style="background:#9E9A93;"></span>Before (Jun 2024)</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#1A6B4A;"></span>After (Aug 2024)</span>
+      </div>
+      <div style="position:relative;width:100%;height:220px;">
+        <canvas id="shiftChart" role="img" aria-label="Grouped bar chart showing shift output before and after rebalancing. Shift 1 improved from 11000 to 14500 pcs. Shift 2 stayed around 15000-15700 pcs. Gap narrowed significantly.">Shift 1 output improved from ~11,000 to ~14,500 pcs. Shift 2 stable at ~15,000–15,700 pcs. Gap reduced from ~4,000 to ~1,200 pcs.</canvas>
+      </div>
+    </div>
+    <div class="chart-cell full-width">
+      <p class="chart-label">Senior operator distribution — before vs after</p>
+      <div class="chart-legend">
+        <span class="legend-item"><span class="legend-dot" style="background:#9E9A93;"></span>Before</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#1A6B4A;"></span>After</span>
+      </div>
+      <div style="position:relative;width:100%;height:180px;">
+        <canvas id="seniorChart" role="img" aria-label="Grouped bar chart comparing senior operator distribution. Before: Shift 1 had 5, Shift 2 had 12. After: Shift 1 has 8, Shift 2 has 9.">Senior operator distribution: Before — S1: 5, S2: 12. After — S1: 8, S2: 9.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Problem -->
+  <div class="rc-grid" style="margin-bottom:2rem;">
+    <div class="rc-cell">
+      <p class="rc-num">Problem 01</p>
+      <p class="rc-text">12 of 17 senior operators concentrated in Shift 2 — Shift 1 systematically underperforming</p>
+    </div>
+    <div class="rc-cell">
+      <p class="rc-num">Problem 02</p>
+      <p class="rc-text">Output gap of ~4,000 pcs/day between shifts was driving overtime to compensate for shortfall</p>
+    </div>
+    <div class="rc-cell">
+      <p class="rc-num">Problem 03</p>
+      <p class="rc-text">No formal criteria for shift assignment — composition had drifted informally over time</p>
+    </div>
+  </div>
+
+  <!-- Interventions -->
+  <ul class="steps-list">
+    <li class="step-item">
+      <span class="step-n">01</span>
+      <p class="step-text"><strong>Data-driven diagnosis.</strong> Mapped operator seniority against per-shift output data in Excel to quantify the imbalance. Identified that output variance tracked closely with senior-to-junior operator ratios.</p>
+    </li>
+    <li class="step-item">
+      <span class="step-n">02</span>
+      <p class="step-text"><strong>Rebalanced operator composition.</strong> Moved 3 senior operators from Shift 2 to Shift 1, targeting near-equal distribution (8 vs 9). Selection based on machine familiarity and product type expertise.</p>
+    </li>
+    <li class="step-item">
+      <span class="step-n">03</span>
+      <p class="step-text"><strong>Monitored output gap weekly.</strong> Tracked daily output per shift in Power BI for 4 weeks post-change. Shift 1 output rose to ~14,500 pcs/day; the inter-shift gap narrowed from ~4,000 to ~1,200 pcs.</p>
+    </li>
+    <li class="step-item">
+      <span class="step-n">04</span>
+      <p class="step-text"><strong>Overtime eliminated.</strong> With daily totals now meeting target without compensatory OT, scheduled overtime was removed entirely from August 2024 onwards.</p>
+    </li>
+  </ul>
+
+  <div class="result-strip">
+    <div class="result-cell">
+      <p class="result-num">+32%</p>
+      <p class="result-label">Shift 1 output<br>11k → 14.5k pcs</p>
+    </div>
+    <div class="result-cell">
+      <p class="result-num">−70%</p>
+      <p class="result-label">Shift output gap<br>4,000 → 1,200 pcs</p>
+    </div>
+    <div class="result-cell">
+      <p class="result-num">0×</p>
+      <p class="result-label">Overtime days<br>from 2× per month</p>
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  Farrel Gunawan · Production Planning &amp; Performance Manager · Jakarta, Indonesia
+</footer>
+
 <script>
-function seed(s){let x=Math.sin(s+99)*10000;return x-Math.floor(x)}
-function rnd(s,mn,mx){return Math.round(mn+(mx-mn)*seed(s))}
-function rndF(s,mn,mx,dp){return parseFloat((mn+(mx-mn)*seed(s)).toFixed(dp))}
+const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+const tickColor = isDark ? '#6B6860' : '#9E9C97';
+const accent = '#1A6B4A';
+const accentLight = isDark ? 'rgba(26,107,74,0.25)' : 'rgba(26,107,74,0.12)';
+const muted = isDark ? '#6B6860' : '#9E9A93';
+const accent2 = '#C8440A';
 
-const gridColor='rgba(0,0,0,0.06)';
-const textColor='#888';
-const baseScales={x:{ticks:{font:{size:10},color:textColor,maxRotation:45,autoSkip:true,maxTicksLimit:12},grid:{color:gridColor}},y:{ticks:{font:{size:10},color:textColor},grid:{color:gridColor}}};
+const baseOpts = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+  scales: {
+    x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 11, family: 'IBM Plex Mono' } } },
+    y: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 11, family: 'IBM Plex Mono' } } }
+  }
+};
 
-const beforeDays=Array.from({length:30},(_,i)=>({
-  label:new Date(2024,7,1+i).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}),
-  out:rnd(i*11+1,22000,27500),s1:rnd(i*11+2,12000,14500),s2:rnd(i*11+3,10000,13500)
-}));
-const afterDays=Array.from({length:45},(_,i)=>({
-  label:new Date(2024,10,1+i).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}),
-  out:rnd(i*11+4,28000,32500),s1:rnd(i*11+5,15000,17500),s2:rnd(i*11+6,13000,16000)
-}));
+// Output chart
+new Chart(document.getElementById('outputChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Aug', 'Sep', 'Nov', 'Dec', 'Jan'],
+    datasets: [
+      {
+        label: 'Before',
+        data: [24800, 25200, null, null, null],
+        backgroundColor: muted,
+        borderRadius: 3
+      },
+      {
+        label: 'After',
+        data: [null, null, 29800, 30400, 30500],
+        backgroundColor: accent,
+        borderRadius: 3
+      },
+      {
+        label: 'Target',
+        data: [30000, 30000, 30000, 30000, 30000],
+        type: 'line',
+        borderColor: accent2,
+        borderDash: [5,3],
+        borderWidth: 1.5,
+        pointRadius: 0,
+        fill: false
+      }
+    ]
+  },
+  options: {
+    ...baseOpts,
+    scales: {
+      ...baseOpts.scales,
+      y: {
+        ...baseOpts.scales.y,
+        min: 22000,
+        ticks: { ...baseOpts.scales.y.ticks, callback: v => (v/1000).toFixed(0) + 'k' }
+      }
+    }
+  }
+});
 
-const months=['Aug','Sep','Oct','Nov','Dec','Jan'];
-const defectAll=[rndF(1,16,20,1),rndF(2,15,19,1),rndF(10,13,16,1),rndF(3,10,14,1),rndF(4,9,13,1),rndF(5,9,12,1)];
-const oeeAll=[rndF(6,62,68,1),rndF(7,63,69,1),rndF(12,66,70,1),rndF(8,72,78,1),rndF(9,74,80,1),rndF(11,75,82,1)];
+// Defect chart
+new Chart(document.getElementById('defectChart'), {
+  type: 'line',
+  data: {
+    labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
+    datasets: [{
+      label: 'Defect rate',
+      data: [17, 16, 15, 12, 11, 10],
+      borderColor: accent2,
+      backgroundColor: 'rgba(200,68,10,0.08)',
+      borderWidth: 2,
+      pointRadius: 3,
+      pointBackgroundColor: accent2,
+      fill: true,
+      tension: 0.3
+    }]
+  },
+  options: {
+    ...baseOpts,
+    scales: {
+      ...baseOpts.scales,
+      y: {
+        ...baseOpts.scales.y,
+        min: 0,
+        max: 25,
+        ticks: { ...baseOpts.scales.y.ticks, callback: v => v + '%' }
+      }
+    }
+  }
+});
 
-const dtColors=['#185FA5','#854F0B','#888780'];
-document.getElementById('dt-legend').innerHTML=['Machine breakdown','Material delay','Other'].map((l,i)=>`<span style="display:flex;align-items:center;gap:4px;font-size:11px;color:#666"><span style="width:10px;height:10px;border-radius:2px;background:${dtColors[i]};display:inline-block"></span>${l}</span>`).join('');
+// OEE chart
+new Chart(document.getElementById('oeeChart'), {
+  type: 'line',
+  data: {
+    labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
+    datasets: [{
+      label: 'OEE',
+      data: [63, 63, 65, 69, 71, 73],
+      borderColor: accent,
+      backgroundColor: accentLight,
+      borderWidth: 2,
+      pointRadius: 3,
+      pointBackgroundColor: accent,
+      fill: true,
+      tension: 0.3
+    }]
+  },
+  options: {
+    ...baseOpts,
+    scales: {
+      ...baseOpts.scales,
+      y: {
+        ...baseOpts.scales.y,
+        min: 55,
+        max: 80,
+        ticks: { ...baseOpts.scales.y.ticks, callback: v => v + '%' }
+      }
+    }
+  }
+});
 
-new Chart(document.getElementById('c1'),{type:'line',data:{labels:[...beforeDays.map(d=>d.label),...afterDays.map(d=>d.label)],datasets:[
-  {label:'Before',data:[...beforeDays.map(d=>d.out),...Array(45).fill(null)],borderColor:'#888780',backgroundColor:'rgba(136,135,128,0.06)',fill:true,tension:0.3,pointRadius:1.5,borderWidth:1.5},
-  {label:'After',data:[...Array(30).fill(null),...afterDays.map(d=>d.out)],borderColor:'#185FA5',backgroundColor:'rgba(24,95,165,0.08)',fill:true,tension:0.3,pointRadius:1.5,borderWidth:2},
-  {label:'Target',data:Array(75).fill(30000),borderColor:'rgba(226,75,74,0.45)',borderDash:[4,4],pointRadius:0,borderWidth:1.5,fill:false}
-]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{...baseScales,y:{...baseScales.y,min:18000,ticks:{...baseScales.y.ticks,callback:v=>v.toLocaleString()}}}}});
+// Shift output chart
+new Chart(document.getElementById('shiftChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Shift 1', 'Shift 2'],
+    datasets: [
+      { label: 'Before', data: [11000, 15000], backgroundColor: muted, borderRadius: 3 },
+      { label: 'After', data: [14500, 15700], backgroundColor: accent, borderRadius: 3 }
+    ]
+  },
+  options: {
+    ...baseOpts,
+    scales: {
+      ...baseOpts.scales,
+      y: {
+        ...baseOpts.scales.y,
+        min: 0,
+        ticks: { ...baseOpts.scales.y.ticks, callback: v => (v/1000).toFixed(0) + 'k' }
+      }
+    }
+  }
+});
 
-new Chart(document.getElementById('c2'),{type:'bar',data:{labels:months,datasets:[{data:defectAll,backgroundColor:months.map((_,i)=>i<2?'rgba(163,45,45,0.75)':i===2?'rgba(133,79,11,0.75)':'rgba(59,109,17,0.75)'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{...baseScales,y:{...baseScales.y,min:0,max:25,ticks:{...baseScales.y.ticks,callback:v=>v+'%'}}}}});
-
-new Chart(document.getElementById('c3'),{type:'bar',data:{labels:['Before (avg)','After (avg)'],datasets:[
-  {label:'Machine',data:[2.8,2.2],backgroundColor:'#185FA5',borderRadius:3},
-  {label:'Material',data:[1.5,1.1],backgroundColor:'#854F0B',borderRadius:3},
-  {label:'Other',data:[0.7,0.5],backgroundColor:'#888780',borderRadius:3}
-]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{...baseScales,y:{...baseScales.y,ticks:{...baseScales.y.ticks,callback:v=>v+'h'}}}}});
-
-new Chart(document.getElementById('c4'),{type:'line',data:{labels:months,datasets:[{data:oeeAll,borderColor:'#0F6E56',backgroundColor:'rgba(15,110,86,0.08)',fill:true,tension:0.3,pointRadius:4,borderWidth:2,pointBackgroundColor:months.map((_,i)=>i<2?'#A32D2D':i===2?'#854F0B':'#0F6E56')}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{...baseScales,y:{...baseScales.y,min:55,max:90,ticks:{...baseScales.y.ticks,callback:v=>v+'%'}}}}});
-
-const s1b=Math.round(beforeDays.reduce((a,d)=>a+d.s1,0)/beforeDays.length);
-const s2b=Math.round(beforeDays.reduce((a,d)=>a+d.s2,0)/beforeDays.length);
-const s1a=Math.round(afterDays.reduce((a,d)=>a+d.s1,0)/afterDays.length);
-const s2a=Math.round(afterDays.reduce((a,d)=>a+d.s2,0)/afterDays.length);
-new Chart(document.getElementById('c5'),{type:'bar',data:{labels:['Shift 1','Shift 2'],datasets:[
-  {label:'Before',data:[s1b,s2b],backgroundColor:'rgba(136,135,128,0.7)',borderRadius:3},
-  {label:'After',data:[s1a,s2a],backgroundColor:'rgba(24,95,165,0.85)',borderRadius:3}
-]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{...baseScales,y:{...baseScales.y,ticks:{...baseScales.y.ticks,callback:v=>v.toLocaleString()}}}}});
+// Senior distribution chart
+new Chart(document.getElementById('seniorChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Shift 1', 'Shift 2'],
+    datasets: [
+      { label: 'Before', data: [5, 12], backgroundColor: muted, borderRadius: 3 },
+      { label: 'After', data: [8, 9], backgroundColor: accent, borderRadius: 3 }
+    ]
+  },
+  options: {
+    ...baseOpts,
+    scales: {
+      ...baseOpts.scales,
+      y: {
+        ...baseOpts.scales.y,
+        min: 0,
+        max: 15,
+        ticks: { ...baseOpts.scales.y.ticks, stepSize: 3 }
+      }
+    }
+  }
+});
 </script>
+
 </body>
 </html>
