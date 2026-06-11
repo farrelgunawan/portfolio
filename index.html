@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Production Improvement Dashboard — Farrel Gunawan</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f5f5f3;color:#1a1a1a;padding:2rem 1rem}
+.container{max-width:900px;margin:0 auto;background:#fff;border-radius:12px;padding:2rem;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+.header-meta{font-size:12px;color:#888;margin-bottom:4px}
+.title{font-size:22px;font-weight:600;color:#1a1a1a;margin-bottom:4px}
+.subtitle{font-size:13px;color:#666;margin-bottom:1rem}
+.badge-row{display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap}
+.badge{font-size:11px;padding:3px 10px;border-radius:6px;font-weight:500}
+.badge-before{background:#FCEBEB;color:#791F1F}
+.badge-after{background:#EAF3DE;color:#27500A}
+.badge-method{background:#E6F1FB;color:#0C447C}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem}
+.kpi{background:#f5f5f3;border-radius:8px;padding:12px 14px}
+.kpi-label{font-size:11px;color:#666;margin-bottom:6px}
+.kpi-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.kpi-before{font-size:13px;color:#A32D2D;text-decoration:line-through}
+.kpi-after{font-size:20px;font-weight:600;color:#3B6D11}
+.kpi-delta{font-size:11px;color:#3B6D11;background:#EAF3DE;padding:2px 6px;border-radius:4px}
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.chart-card{background:#fff;border:1px solid #e8e8e6;border-radius:10px;padding:14px}
+.chart-card.full{grid-column:1/-1}
+.chart-title{font-size:12px;font-weight:500;color:#1a1a1a;margin-bottom:10px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;font-size:11px;color:#666}
+.legend span{display:flex;align-items:center;gap:4px}
+.leg-dot{width:10px;height:10px;border-radius:2px;display:inline-block}
+.divider{border:none;border-top:1px solid #e8e8e6;margin:2rem 0}
+.section-title{font-size:16px;font-weight:600;color:#1a1a1a;margin-bottom:4px}
+.section-sub{font-size:12px;color:#666;margin-bottom:1.25rem}
+.root-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem}
+.root-card{background:#f9f9f8;border-radius:8px;padding:10px 12px;border-left:3px solid}
+.root-card.rc1{border-color:#E24B4A}
+.root-card.rc2{border-color:#EF9F27}
+.root-card.rc3{border-color:#378ADD}
+.root-label{font-size:10px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.root-text{font-size:12px;color:#1a1a1a;line-height:1.5}
+.phase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.25rem}
+.phase-card{border:1px solid #e8e8e6;border-radius:10px;padding:14px;background:#fff}
+.phase-card.full{grid-column:1/-1}
+.phase-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.phase-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px}
+.phase-d{background:#E6F1FB;color:#0C447C}
+.phase-m{background:#EAF3DE;color:#27500A}
+.phase-a{background:#FAEEDA;color:#633806}
+.phase-i{background:#EEEDFE;color:#3C3489}
+.phase-c{background:#E1F5EE;color:#085041}
+.phase-name{font-size:13px;font-weight:500;color:#1a1a1a}
+.phase-problem{font-size:11px;color:#888;margin-bottom:8px;font-style:italic;line-height:1.4}
+.phase-items{display:flex;flex-direction:column;gap:5px}
+.phase-item{font-size:12px;color:#1a1a1a;display:flex;gap:6px;line-height:1.5}
+.phase-item-dot{color:#aaa;flex-shrink:0}
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:1.25rem}
+.result-card{background:#f5f5f3;border-radius:8px;padding:12px 14px;border-top:3px solid #3B6D11}
+.result-metric{font-size:22px;font-weight:600;color:#3B6D11;margin-bottom:2px}
+.result-label{font-size:11px;color:#666;line-height:1.4}
+@media(max-width:600px){
+  .kpi-grid,.charts-row,.root-grid,.phase-grid,.result-grid{grid-template-columns:1fr}
+  .chart-card.full,.phase-card.full{grid-column:1}
+  body{padding:1rem .5rem}
+  .container{padding:1.25rem}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header-meta">Portfolio Project 1 — Production Operations</div>
+  <div class="title">Production Performance Dashboard</div>
+  <div class="subtitle">PT. Prima Jaya Fenolik Melamin &nbsp;·&nbsp; Melamine Tableware Manufacturing &nbsp;·&nbsp; Aug 2024 – Jan 2025</div>
+
+  <div class="badge-row">
+    <span class="badge badge-before">Before: Aug–Sep 2024</span>
+    <span class="badge badge-method">Six Sigma DMAIC — Oct 2024</span>
+    <span class="badge badge-after">After: Nov 2024 – Jan 2025</span>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">Avg daily output (pcs)</div>
+      <div class="kpi-row"><span class="kpi-before">~25,000</span><span class="kpi-after">~30,200</span><span class="kpi-delta">+20%</span></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Defect rate</div>
+      <div class="kpi-row"><span class="kpi-before">15–20%</span><span class="kpi-after">9–14%</span><span class="kpi-delta">−6pp</span></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Avg downtime / day</div>
+      <div class="kpi-row"><span class="kpi-before">~5.0 hrs</span><span class="kpi-after">~4.5 hrs</span><span class="kpi-delta">−10%</span></div>
+    </div>
+  </div>
+
+  <div class="charts-row">
+    <div class="chart-card full">
+      <div class="chart-title">Daily output (pcs) — before vs after improvement</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#888780"></span>Before (Aug–Sep)</span>
+        <span><span class="leg-dot" style="background:#185FA5"></span>After (Nov–Jan)</span>
+        <span><span class="leg-dot" style="background:rgba(226,75,74,0.5)"></span>Target 30,000</span>
+      </div>
+      <div style="position:relative;height:220px"><canvas id="c1"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Defect rate (%) — monthly trend</div>
+      <div style="position:relative;height:190px"><canvas id="c2"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Downtime by cause (hrs/day avg)</div>
+      <div class="legend" id="dt-legend"></div>
+      <div style="position:relative;height:170px"><canvas id="c3"></canvas></div>
+    </div>
+  </div>
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">OEE (%) — monthly trend</div>
+      <div style="position:relative;height:180px"><canvas id="c4"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Output by shift — before vs after</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#888780"></span>Before</span>
+        <span><span class="leg-dot" style="background:#185FA5"></span>After</span>
+      </div>
+      <div style="position:relative;height:180px"><canvas id="c5"></canvas></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-title">Improvement case study</div>
+  <div class="section-sub">Six Sigma DMAIC — PT. Prima Jaya Fenolik Melamin, October 2024</div>
+
+  <div class="root-grid">
+    <div class="root-card rc1">
+      <div class="root-label">Root cause 1</div>
+      <div class="root-text">Operators changing machine parameters independently — no standardized settings per product type</div>
+    </div>
+    <div class="root-card rc2">
+      <div class="root-label">Root cause 2</div>
+      <div class="root-text">Operators not following SOPs consistently — process execution varied across shifts</div>
+    </div>
+    <div class="root-card rc3">
+      <div class="root-label">Root cause 3</div>
+      <div class="root-text">Incoming raw material quality inconsistent across batches from the same supplier</div>
+    </div>
+  </div>
+
+  <div class="phase-grid">
+    <div class="phase-card">
+      <div class="phase-header"><span class="phase-badge phase-d">Define</span><span class="phase-name">Problem scoping</span></div>
+      <div class="phase-problem">High defect rate (15–20%) and below-target output (~25,000 pcs/day) across 2 shifts</div>
+      <div class="phase-items">
+        <div class="phase-item"><span class="phase-item-dot">·</span><span>Defined project scope: defect reduction and output improvement across 70 machines, 2 shifts</span></div>
+        <div class="phase-item"><span class="phase-item-dot">·</span><span>Set targets: defect rate below 15%, output consistently at or above 30,000 pcs/day</span></div>
+      </div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-header"><span class="phase-badge phase-m">Measure</span><span class="phase-name">Data collection</span></div>
+      <div class="phase-problem">Established baseline metrics before any changes were made</div>
+      <div class="phase-items">
+        <div class="phase-item"><span class="phase-item-dot">·</span><span>Collected daily output, defect type, and downtime data per machine and per shift</span></div>
+        <div class="phase-item"><span class="phase-item-dot">·</span><span>Tracked machine parameter settings across operators to identify variation patterns</span></div>
+        <div class="phase-item"><span class="phase-item-dot">·</span><span>Logged raw material batch quality on arrival to identify correlation with defect spikes</span></div>
+      </div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-header"><span class="phase-badge phase-a">Analyze</span><span class="phase-name">Root cause analysis</span></div>
+      <div class="phase-problem">Identified three primary drivers of defects and output loss</div>
+      <div class="phase-items">
+        <div class="phase-item"><span class="phase-item-dot">·</span><span>Parameter deviation by operators correlated directly with defect rate spikes on specific machines</span></div>
+        <div class="phase-item"><span class="phase-item-dot">·</span><span>SOP non-compliance varied significantly between shifts — inconsistent process execution</span></div>
+        <div class="phase-item"><span class="phase-item-dot">·</span><span>Batch-to-batch material quality variation identified as a trigger for unplanned defect increases</span></div>
+      </div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-header"><span class="phase-badge phase-i">Improve</span><span class="phase-name">Interventions</span></div>
+      <div class="phase-problem">Four concrete changes implemented in October 2024</div>
+      <div class="phase-items">
+        <div class="phase-item"><span class="phase-item-dot">·</span><span>Standardized machine parameters per product type — operators prohibited from adjusting settings independently</span></div>
+        <div class="phase-item"><span class="phase-item-dot">·</span><span>Implemented incoming material quality check before raw material enters the production floor</span></div>
+        <div class="phase-item"><span class="phase-item-dot">·</span><span>Rescheduled production priorities based on available material quality — batches with quality issues deprioritized</span></div>
+        <div class="phase-item"><span class="phase-item-dot">·</span><span>Rebalanced operator composition across shifts to distribute experienced operators more evenly</span></div>
+      </div>
+    </div>
+    <div class="phase-card full">
+      <div class="phase-header"><span class="phase-badge phase-c">Control</span><span class="phase-name">Sustaining the improvement</span></div>
+      <div class="phase-problem">Monitoring systems put in place to detect regression early</div>
+      <div class="phase-items">
+        <div class="phase-item"><span class="phase-item-dot">·</span><span>Built a real-time production KPI dashboard (Power BI) — tracking output, defect rate, downtime, and OEE daily; adopted by management as primary monitoring tool</span></div>
+        <div class="phase-item"><span class="phase-item-dot">·</span><span>Process documentation updated and aligned with ISO 9001:2015 standards to formalize the new parameter standards and material handling procedures</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-grid">
+    <div class="result-card"><div class="result-metric">+20%</div><div class="result-label">Output increase — ~25,000 to ~30,200 pcs/day</div></div>
+    <div class="result-card"><div class="result-metric">−6pp</div><div class="result-label">Defect rate — 15–20% down to 9–14%</div></div>
+    <div class="result-card"><div class="result-metric">−10%</div><div class="result-label">Downtime reduction — ~5.0 hrs to ~4.5 hrs/day</div></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+function seed(s){let x=Math.sin(s+99)*10000;return x-Math.floor(x)}
+function rnd(s,mn,mx){return Math.round(mn+(mx-mn)*seed(s))}
+function rndF(s,mn,mx,dp){return parseFloat((mn+(mx-mn)*seed(s)).toFixed(dp))}
+
+const gridColor='rgba(0,0,0,0.06)';
+const textColor='#888';
+const baseScales={x:{ticks:{font:{size:10},color:textColor,maxRotation:45,autoSkip:true,maxTicksLimit:12},grid:{color:gridColor}},y:{ticks:{font:{size:10},color:textColor},grid:{color:gridColor}}};
+
+const beforeDays=Array.from({length:30},(_,i)=>({
+  label:new Date(2024,7,1+i).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}),
+  out:rnd(i*11+1,22000,27500),s1:rnd(i*11+2,12000,14500),s2:rnd(i*11+3,10000,13500)
+}));
+const afterDays=Array.from({length:45},(_,i)=>({
+  label:new Date(2024,10,1+i).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}),
+  out:rnd(i*11+4,28000,32500),s1:rnd(i*11+5,15000,17500),s2:rnd(i*11+6,13000,16000)
+}));
+
+const months=['Aug','Sep','Oct','Nov','Dec','Jan'];
+const defectAll=[rndF(1,16,20,1),rndF(2,15,19,1),rndF(10,13,16,1),rndF(3,10,14,1),rndF(4,9,13,1),rndF(5,9,12,1)];
+const oeeAll=[rndF(6,62,68,1),rndF(7,63,69,1),rndF(12,66,70,1),rndF(8,72,78,1),rndF(9,74,80,1),rndF(11,75,82,1)];
+
+const dtColors=['#185FA5','#854F0B','#888780'];
+document.getElementById('dt-legend').innerHTML=['Machine breakdown','Material delay','Other'].map((l,i)=>`<span style="display:flex;align-items:center;gap:4px;font-size:11px;color:#666"><span style="width:10px;height:10px;border-radius:2px;background:${dtColors[i]};display:inline-block"></span>${l}</span>`).join('');
+
+new Chart(document.getElementById('c1'),{type:'line',data:{labels:[...beforeDays.map(d=>d.label),...afterDays.map(d=>d.label)],datasets:[
+  {label:'Before',data:[...beforeDays.map(d=>d.out),...Array(45).fill(null)],borderColor:'#888780',backgroundColor:'rgba(136,135,128,0.06)',fill:true,tension:0.3,pointRadius:1.5,borderWidth:1.5},
+  {label:'After',data:[...Array(30).fill(null),...afterDays.map(d=>d.out)],borderColor:'#185FA5',backgroundColor:'rgba(24,95,165,0.08)',fill:true,tension:0.3,pointRadius:1.5,borderWidth:2},
+  {label:'Target',data:Array(75).fill(30000),borderColor:'rgba(226,75,74,0.45)',borderDash:[4,4],pointRadius:0,borderWidth:1.5,fill:false}
+]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{...baseScales,y:{...baseScales.y,min:18000,ticks:{...baseScales.y.ticks,callback:v=>v.toLocaleString()}}}}});
+
+new Chart(document.getElementById('c2'),{type:'bar',data:{labels:months,datasets:[{data:defectAll,backgroundColor:months.map((_,i)=>i<2?'rgba(163,45,45,0.75)':i===2?'rgba(133,79,11,0.75)':'rgba(59,109,17,0.75)'),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{...baseScales,y:{...baseScales.y,min:0,max:25,ticks:{...baseScales.y.ticks,callback:v=>v+'%'}}}}});
+
+new Chart(document.getElementById('c3'),{type:'bar',data:{labels:['Before (avg)','After (avg)'],datasets:[
+  {label:'Machine',data:[2.8,2.2],backgroundColor:'#185FA5',borderRadius:3},
+  {label:'Material',data:[1.5,1.1],backgroundColor:'#854F0B',borderRadius:3},
+  {label:'Other',data:[0.7,0.5],backgroundColor:'#888780',borderRadius:3}
+]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{...baseScales,y:{...baseScales.y,ticks:{...baseScales.y.ticks,callback:v=>v+'h'}}}}});
+
+new Chart(document.getElementById('c4'),{type:'line',data:{labels:months,datasets:[{data:oeeAll,borderColor:'#0F6E56',backgroundColor:'rgba(15,110,86,0.08)',fill:true,tension:0.3,pointRadius:4,borderWidth:2,pointBackgroundColor:months.map((_,i)=>i<2?'#A32D2D':i===2?'#854F0B':'#0F6E56')}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{...baseScales,y:{...baseScales.y,min:55,max:90,ticks:{...baseScales.y.ticks,callback:v=>v+'%'}}}}});
+
+const s1b=Math.round(beforeDays.reduce((a,d)=>a+d.s1,0)/beforeDays.length);
+const s2b=Math.round(beforeDays.reduce((a,d)=>a+d.s2,0)/beforeDays.length);
+const s1a=Math.round(afterDays.reduce((a,d)=>a+d.s1,0)/afterDays.length);
+const s2a=Math.round(afterDays.reduce((a,d)=>a+d.s2,0)/afterDays.length);
+new Chart(document.getElementById('c5'),{type:'bar',data:{labels:['Shift 1','Shift 2'],datasets:[
+  {label:'Before',data:[s1b,s2b],backgroundColor:'rgba(136,135,128,0.7)',borderRadius:3},
+  {label:'After',data:[s1a,s2a],backgroundColor:'rgba(24,95,165,0.85)',borderRadius:3}
+]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{...baseScales,y:{...baseScales.y,ticks:{...baseScales.y.ticks,callback:v=>v.toLocaleString()}}}}});
+</script>
+</body>
+</html>
