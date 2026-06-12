@@ -908,144 +908,139 @@
 
 </section>
 
-
 <hr class="divider">
 
 <section class="section" id="project3">
   <div class="section-header">
     <div class="section-num">Project 03 · ERP Implementation</div>
     <h2 class="section-title">SAP MM &amp; PP — ERP Implementation</h2>
-    <div class="section-meta">PT. Prima Jaya Fenolik Melamin · Resin Manufacturing · 2024–2025 · SAP S/4HANA</div>
+    <div class="section-meta">PT. Prima Jaya Fenolik Melamin · Melamine Tableware Manufacturing · 2024–2025 · SAP S/4HANA</div>
   </div>
 
-  <!-- KPI -->
   <div class="kpi-grid">
     <div class="kpi-cell">
-      <div class="kpi-label">Akurasi stok</div>
+      <div class="kpi-label">Inventory accuracy</div>
       <div class="kpi-row">
         <span class="kpi-before">&gt;5%</span>
         <span class="kpi-after">&lt;1%</span>
-        <span>selisih</span>
+        <span>variance</span>
       </div>
       <span class="kpi-delta delta-good">−4 pp</span>
     </div>
     <div class="kpi-cell">
-      <div class="kpi-label">Lead time PO</div>
+      <div class="kpi-label">PO lead time</div>
       <div class="kpi-row">
-        <span class="kpi-before">3 hari</span>
-        <span class="kpi-after">1 hari</span>
+        <span class="kpi-before">3 days</span>
+        <span class="kpi-after">1 day</span>
       </div>
       <span class="kpi-delta delta-good">−67%</span>
     </div>
     <div class="kpi-cell">
-      <div class="kpi-label">Kalkulasi BOM</div>
+      <div class="kpi-label">BOM calculation</div>
       <div class="kpi-row">
         <span class="kpi-before">Manual</span>
-        <span class="kpi-after">Otomatis</span>
+        <span class="kpi-after">Automated</span>
       </div>
       <span class="kpi-delta delta-good">Eliminated</span>
     </div>
     <div class="kpi-cell">
       <div class="kpi-label">Material shortage</div>
       <div class="kpi-row">
-        <span class="kpi-before">Sering</span>
+        <span class="kpi-before">Frequent</span>
         <span class="kpi-after">0×</span>
       </div>
       <span class="kpi-delta delta-good">MRP −21 days</span>
     </div>
   </div>
 
-  <!-- MASALAH BISNIS -->
   <div class="rc-grid">
     <div class="rc-cell">
       <div class="rc-num">Problem 01</div>
-      <div class="rc-text">Pengadaan bahan baku kimia (fenol, formaldehida, melamin powder) dilakukan manual via email — tidak ada jejak audit PO yang terstruktur</div>
+      <div class="rc-text">Raw material procurement (melamine powder, resin, hardener) handled manually via email and phone — no structured PO audit trail or approval workflow</div>
     </div>
     <div class="rc-cell">
       <div class="rc-num">Problem 02</div>
-      <div class="rc-text">Stok bahan baku dicatat di spreadsheet terpisah — tidak ada visibilitas real-time antar gudang dan lantai produksi</div>
+      <div class="rc-text">Inventory levels tracked in disconnected spreadsheets — no real-time stock visibility between warehouse and production floor</div>
     </div>
     <div class="rc-cell">
       <div class="rc-num">Problem 03</div>
-      <div class="rc-text">Kalkulasi kebutuhan bahan baku per batch dilakukan manual oleh supervisor — tidak ada BOM standar, rawan human error</div>
+      <div class="rc-text">Raw material quantities per molding batch calculated manually by supervisors — no standardized BOM, prone to human error and material waste</div>
     </div>
     <div class="rc-cell">
       <div class="rc-num">Problem 04</div>
-      <div class="rc-text">Lead time bahan baku impor (melamin powder, 21 hari) tidak diperhitungkan dalam jadwal produksi — produksi sering berhenti mendadak</div>
+      <div class="rc-text">21-day import lead time for melamine powder not integrated into production scheduling — unplanned stoppages occurred when stock ran out</div>
     </div>
   </div>
 
-  <!-- PROSES PENGERJAAN MM -->
   <h3 style="font-size:1rem; font-weight:600; margin-bottom:1rem; color:var(--text-primary);">SAP MM — Materials Management</h3>
   <ul class="steps-list">
     <li class="step-item">
       <span class="step-n">01</span>
-      <span class="step-text"><strong>Blueprinting &amp; requirement gathering.</strong> Memetakan alur pengadaan bahan baku kimia bersama tim procurement, warehouse, dan finance untuk membangun alur Procure-to-Pay yang sesuai proses bisnis.</span>
+      <span class="step-text"><strong>Blueprinting &amp; requirement gathering.</strong> Mapped the end-to-end raw material procurement flow with procurement, warehouse, and finance teams to align SAP configuration with actual business processes at the tableware plant.</span>
     </li>
     <li class="step-item">
       <span class="step-n">02</span>
-      <span class="step-text"><strong>Konfigurasi Organizational Structure.</strong> Setup Company Code, Plant (satu plant produksi), dan tiga Storage Location: bahan baku, WIP, dan produk jadi.</span>
+      <span class="step-text"><strong>Organizational Structure configuration.</strong> Set up Company Code, one Production Plant, and three Storage Locations — raw materials, WIP, and finished goods — reflecting the physical warehouse layout.</span>
     </li>
     <li class="step-item">
       <span class="step-n">03</span>
-      <span class="step-text"><strong>Pembuatan Material Master <code>MM01</code>.</strong> Mendefinisikan data dasar seluruh bahan baku: formaldehida, fenol, urea, melamin powder, NaOH, dan aditif — termasuk unit satuan, valuation class, dan reorder point.</span>
+      <span class="step-text"><strong>Material Master creation <code>MM01</code>.</strong> Defined master data for all raw materials — melamine powder, resin, hardener, colorant, and release agent — including unit of measure, valuation class, and reorder points per material.</span>
     </li>
     <li class="step-item">
       <span class="step-n">04</span>
-      <span class="step-text"><strong>Vendor Master <code>XK01</code> &amp; Info Record.</strong> Mendaftarkan vendor lokal dan importir melamin, kemudian memetakan vendor utama per material melalui Source List.</span>
+      <span class="step-text"><strong>Vendor Master <code>XK01</code> &amp; Info Records.</strong> Registered local suppliers and melamine powder importers; mapped preferred vendors per material via Source List to enforce purchasing standards.</span>
     </li>
     <li class="step-item">
       <span class="step-n">05</span>
-      <span class="step-text"><strong>Implementasi alur PR → PO → GR → IV end-to-end.</strong> Konfigurasi Movement Type 101 (GR), 261 (GI ke Production Order), dan integrasi pembayaran ke modul FI. UAT bersama user procurement dan finance.</span>
+      <span class="step-text"><strong>End-to-end Procure-to-Pay implementation.</strong> Configured full PR → PO → GR → Invoice Verification flow with Movement Types 101 and 261. Integrated with FI for payment processing. Conducted UAT with procurement and finance users prior to go-live.</span>
     </li>
   </ul>
 
-  <!-- PROSES PENGERJAAN PP -->
   <h3 style="font-size:1rem; font-weight:600; margin-bottom:1rem; color:var(--text-primary);">SAP PP — Production Planning</h3>
   <ul class="steps-list">
     <li class="step-item">
       <span class="step-n">01</span>
-      <span class="step-text"><strong>Analisis proses produksi.</strong> Memetakan alur produksi resin: mixing, reaksi kimia, pendinginan, quality check, hingga pengemasan — sebagai dasar konfigurasi PP.</span>
+      <span class="step-text"><strong>Production process analysis.</strong> Mapped the full molding production flow — material preparation, compression molding, trimming &amp; finishing, quality inspection, and packaging — as the foundation for PP master data and configuration.</span>
     </li>
     <li class="step-item">
       <span class="step-n">02</span>
-      <span class="step-text"><strong>Setup Work Center <code>CR01</code>.</strong> Mendefinisikan empat stasiun kerja: Mixing Tank A, Mixing Tank B, Reactor, dan Packaging Line — lengkap dengan kapasitas dan waktu operasi standar.</span>
+      <span class="step-text"><strong>Work Center setup <code>CR01</code>.</strong> Defined work centers for each production station: Mixing &amp; Preparation, Molding Press Lines (70 machines across 2 shifts), Trimming &amp; Finishing, and Packaging — with standard capacity and operation times per station.</span>
     </li>
     <li class="step-item">
       <span class="step-n">03</span>
-      <span class="step-text"><strong>Pembuatan BOM <code>CS01</code>.</strong> Menyusun Bill of Materials untuk tiga jenis resin (Phenolic PF-100, Melamine MF-200, Urea Formaldehyde UF-300) beserta komposisi bahan baku per 1.000 kg batch.</span>
+      <span class="step-text"><strong>Bill of Materials creation <code>CS01</code>.</strong> Built BOMs for each product category — plates, bowls, cups, and serving sets — defining the precise raw material composition (melamine powder, resin, hardener, colorant) per production batch.</span>
     </li>
     <li class="step-item">
       <span class="step-n">04</span>
-      <span class="step-text"><strong>Routing <code>CA01</code> &amp; Production Version.</strong> Mendefinisikan urutan operasi dan waktu standar per batch, kemudian menghubungkan BOM dan Routing ke Production Version masing-masing produk.</span>
+      <span class="step-text"><strong>Routing <code>CA01</code> &amp; Production Version.</strong> Defined operation sequences and standard processing times per batch; linked each BOM and Routing into a Production Version per product type to standardize the manufacturing process.</span>
     </li>
     <li class="step-item">
       <span class="step-n">05</span>
-      <span class="step-text"><strong>Eksekusi MRP <code>MD01</code> &amp; Production Order.</strong> Menjalankan MRP mingguan untuk menghasilkan Planned Orders; mengkonversi ke Production Order <code>CO01</code>, Goods Issue, konfirmasi <code>CO11N</code>, dan GR produk jadi. Pelatihan user produksi untuk transaksi harian.</span>
+      <span class="step-text"><strong>MRP execution <code>MD01</code> &amp; Production Order management.</strong> Configured and ran weekly MRP to generate Planned Orders with a 21-day import buffer for melamine powder. Converted to Production Orders <code>CO01</code>, executed Goods Issue to production, confirmed output via <code>CO11N</code>, and posted GR for finished goods. Delivered hands-on user training for daily PP transactions.</span>
     </li>
   </ul>
 
-  <!-- RESULT STRIP -->
   <div class="result-strip">
     <div class="result-cell">
       <div class="result-num">&lt;1%</div>
-      <div class="result-label">Akurasi stok<br>dari &gt;5% selisih</div>
+      <div class="result-label">Inventory variance<br>down from &gt;5%</div>
     </div>
     <div class="result-cell">
       <div class="result-num">−67%</div>
-      <div class="result-label">Lead time PO<br>3 hari → 1 hari</div>
+      <div class="result-label">PO lead time<br>3 days → 1 day</div>
     </div>
     <div class="result-cell">
       <div class="result-num">−21d</div>
-      <div class="result-label">Early warning<br>via MRP impor</div>
+      <div class="result-label">Early procurement signal<br>via MRP import buffer</div>
     </div>
     <div class="result-cell">
       <div class="result-num">0×</div>
-      <div class="result-label">Material shortage<br>pasca go-live</div>
+      <div class="result-label">Material shortages<br>post go-live</div>
     </div>
   </div>
 
 </section>
+
 <footer>
   Farrel Gunawan · Production Operations Manager · Jakarta, Indonesia
 </footer>
