@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAP MM & PP Portfolio — Farel Gunawan</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+      line-height: 1.7;
+    }
+    header {
+      background: #0f4c75;
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+    header p { font-size: 1.1rem; opacity: 0.85; }
+    .badge {
+      display: inline-block;
+      background: #1b9aaa;
+      color: white;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      margin: 0.3rem;
+    }
+    main {
+      max-width: 900px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+    }
+    section {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    h2 {
+      font-size: 1.5rem;
+      color: #0f4c75;
+      border-left: 4px solid #1b9aaa;
+      padding-left: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    h3 {
+      font-size: 1.1rem;
+      color: #333;
+      margin: 1.25rem 0 0.5rem;
+    }
+    ol, ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    li { margin-bottom: 0.4rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.75rem;
+      font-size: 0.93rem;
+    }
+    th {
+      background: #0f4c75;
+      color: white;
+      padding: 0.6rem 1rem;
+      text-align: left;
+    }
+    td {
+      padding: 0.55rem 1rem;
+      border-bottom: 1px solid #e8e8e8;
+    }
+    tr:nth-child(even) td { background: #f9f9f9; }
+    code {
+      background: #eef2f7;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      font-family: monospace;
+    }
+    .case-study {
+      background: #f0f8ff;
+      border-left: 4px solid #0f4c75;
+      padding: 1.25rem 1.5rem;
+      border-radius: 0 8px 8px 0;
+    }
+    .note {
+      font-size: 0.85rem;
+      color: #777;
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #999;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>SAP MM &amp; PP Portfolio</h1>
+  <p>Farel Gunawan — ERP Enthusiast</p>
+  <div style="margin-top: 1rem;">
+    <span class="badge">SAP MM</span>
+    <span class="badge">SAP PP</span>
+    <span class="badge">S/4HANA</span>
+    <span class="badge">Supply Chain</span>
+    <span class="badge">Manufacturing</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- SAP MM -->
+  <section>
+    <h2>Modul SAP MM — Materials Management</h2>
+    <p>SAP MM mencakup seluruh proses pengadaan barang dan jasa, manajemen inventori, dan valuasi material.</p>
+
+    <h3>Proses Utama: Procure-to-Pay</h3>
+    <ol>
+      <li><strong>Purchase Requisition (PR)</strong> — permintaan pembelian dari departemen</li>
+      <li><strong>Request for Quotation (RFQ)</strong> — permintaan penawaran ke vendor</li>
+      <li><strong>Purchase Order (PO)</strong> — surat pesanan resmi ke vendor</li>
+      <li><strong>Goods Receipt (GR)</strong> — penerimaan barang di gudang</li>
+      <li><strong>Invoice Verification (IV)</strong> — verifikasi tagihan vendor</li>
+      <li><strong>Payment</strong> — pembayaran ke vendor (integrasi FI)</li>
+    </ol>
+
+    <h3>Konfigurasi yang Dikuasai</h3>
+    <ul>
+      <li>Organizational Structure: Company Code, Plant, Storage Location, Purchasing Org</li>
+      <li>Material Master <code>MM01</code> — data dasar material per view</li>
+      <li>Vendor Master <code>XK01</code></li>
+      <li>Info Record, Source List, Quota Arrangement</li>
+      <li>Movement Types (101, 201, 261, 311, dll.)</li>
+      <li>Valuation and Account Determination</li>
+    </ul>
+
+    <h3>Transaksi Kunci</h3>
+    <table>
+      <tr><th>Kode Transaksi</th><th>Fungsi</th></tr>
+      <tr><td><code>ME21N</code></td><td>Buat Purchase Order</td></tr>
+      <tr><td><code>MIGO</code></td><td>Goods Receipt / Goods Issue</td></tr>
+      <tr><td><code>MIRO</code></td><td>Invoice Verification</td></tr>
+      <tr><td><code>MB52</code></td><td>Laporan stok gudang</td></tr>
+      <tr><td><code>ME2M</code></td><td>Monitor PO per material</td></tr>
+    </table>
+  </section>
+
+  <!-- SAP PP -->
+  <section>
+    <h2>Modul SAP PP — Production Planning</h2>
+    <p>SAP PP mengelola perencanaan dan eksekusi produksi dari BOM hingga manufacturing order.</p>
+
+    <h3>Proses Utama: Plan-to-Produce</h3>
+    <ol>
+      <li><strong>Sales & Operations Planning (SOP)</strong> — perencanaan kapasitas jangka panjang</li>
+      <li><strong>Master Production Scheduling (MPS)</strong> — jadwal produksi item kritis</li>
+      <li><strong>Material Requirements Planning (MRP)</strong> — kebutuhan material otomatis</li>
+      <li><strong>Production Order</strong> — perintah produksi ke lantai pabrik</li>
+      <li><strong>Goods Issue</strong> — pengeluaran bahan baku ke produksi</li>
+      <li><strong>Confirmation</strong> — konfirmasi hasil produksi</li>
+      <li><strong>Goods Receipt</strong> — penerimaan hasil jadi ke gudang</li>
+    </ol>
+
+    <h3>Master Data yang Dikuasai</h3>
+    <ul>
+      <li><strong>Bill of Materials (BOM)</strong> <code>CS01</code> — daftar komponen produk</li>
+      <li><strong>Work Center</strong> <code>CR01</code> — tempat kerja / mesin</li>
+      <li><strong>Routing</strong> <code>CA01</code> — urutan operasi produksi</li>
+      <li><strong>Production Version</strong> — kombinasi BOM + Routing</li>
+    </ul>
+
+    <h3>Transaksi Kunci</h3>
+    <table>
+      <tr><th>Kode Transaksi</th><th>Fungsi</th></tr>
+      <tr><td><code>CS01</code></td><td>Buat Bill of Materials</td></tr>
+      <tr><td><code>CR01</code></td><td>Buat Work Center</td></tr>
+      <tr><td><code>CA01</code></td><td>Buat Routing</td></tr>
+      <tr><td><code>MD01</code></td><td>Jalankan MRP</td></tr>
+      <tr><td><code>CO01</code></td><td>Buat Production Order</td></tr>
+      <tr><td><code>CO11N</code></td><td>Konfirmasi produksi</td></tr>
+      <tr><td><code>COOIS</code></td><td>Monitor Production Order</td></tr>
+    </table>
+  </section>
+
+  <!-- Case Study -->
+  <section>
+    <h2>Case Study: PT. Prima Jaya Fenolik Melamin</h2>
+    <p style="color:#555; margin-bottom:1rem;">Industri: Manufaktur Resin Fenolik &amp; Melamin &mdash; Implementasi SAP MM &amp; PP</p>
+
+    <div class="case-study">
+      <h3>Latar Belakang Perusahaan</h3>
+      <p>PT. Prima Jaya Fenolik Melamin adalah produsen bahan baku resin fenolik dan melamin yang digunakan di industri kayu lapis, particleboard, dan produk komposit. Perusahaan mengoperasikan satu plant produksi dengan beberapa lini mixing dan reaksi kimia, serta mengelola puluhan jenis bahan baku seperti formaldehida, fenol, urea, dan melamin powder.</p>
+
+      <h3 style="margin-top:1.25rem;">Masalah Bisnis</h3>
+      <ul>
+        <li>Pengadaan bahan baku kimia dilakukan manual via email dan telepon &mdash; tidak ada jejak audit PO yang terstruktur</li>
+        <li>Stok bahan baku seperti formaldehida dan fenol sering tidak diketahui posisi aktualnya karena pencatatan masih di spreadsheet terpisah</li>
+        <li>Perencanaan produksi tidak terintegrasi dengan ketersediaan material &mdash; produksi sering berhenti mendadak karena kekurangan bahan baku</li>
+        <li>Tidak ada standar BOM (Bill of Materials) per produk &mdash; setiap batch produksi dihitung manual oleh supervisor</li>
+        <li>Lead time pengadaan bahan baku impor (melamin powder) tidak diperhitungkan dalam jadwal produksi</li>
+      </ul>
+
+      <h3 style="margin-top:1.25rem;">Proses Pengerjaan</h3>
+
+      <h4 style="margin-top:1rem; color:#0f4c75;">SAP MM &mdash; Materials Management</h4>
+      <ol>
+        <li>Melakukan <strong>blueprinting</strong> alur pengadaan bahan baku kimia bersama tim procurement dan warehouse</li>
+        <li>Konfigurasi <strong>Organizational Structure</strong>: satu Company Code, satu Plant (produksi), tiga Storage Location (bahan baku, WIP, produk jadi)</li>
+        <li>Pembuatan <strong>Material Master</strong> (<code>MM01</code>) untuk seluruh bahan baku: formaldehida, fenol, urea, melamin powder, NaOH, dan bahan aditif lainnya &mdash; termasuk unit satuan, valuation class, dan reorder point</li>
+        <li>Pembuatan <strong>Vendor Master</strong> (<code>XK01</code>) untuk supplier bahan baku lokal dan importir melamin</li>
+        <li>Setup <strong>Info Record</strong> dan <strong>Source List</strong> untuk memetakan vendor utama per material</li>
+        <li>Implementasi alur <strong>Purchase Requisition &rarr; PO &rarr; GR &rarr; Invoice Verification</strong> secara end-to-end</li>
+        <li>Konfigurasi <strong>Movement Type</strong> 101 (GR), 201 (GI ke cost center), 261 (GI ke Production Order)</li>
+        <li>UAT bersama user procurement dan finance untuk verifikasi alur MIGO dan MIRO</li>
+      </ol>
+
+      <h4 style="margin-top:1rem; color:#0f4c75;">SAP PP &mdash; Production Planning</h4>
+      <ol>
+        <li>Analisis proses produksi resin: mixing, reaksi, pendinginan, quality check, dan pengemasan</li>
+        <li>Pembuatan <strong>Work Center</strong> (<code>CR01</code>) untuk setiap stasiun kerja: Mixing Tank A, Mixing Tank B, Reactor, dan Packaging Line</li>
+        <li>Pembuatan <strong>Routing</strong> (<code>CA01</code>) yang mendefinisikan urutan operasi dan waktu standar per batch produksi</li>
+        <li>Pembuatan <strong>Bill of Materials</strong> (<code>CS01</code>) per jenis resin (Phenolic Resin PF-100, Melamine Resin MF-200, Urea Formaldehyde UF-300) beserta komposisi bahan baku per 1.000 kg batch</li>
+        <li>Setup <strong>Production Version</strong> yang menghubungkan BOM dan Routing masing-masing produk</li>
+        <li>Konfigurasi dan eksekusi <strong>MRP</strong> (<code>MD01</code>) untuk menghasilkan Planned Orders berdasarkan demand dari Sales</li>
+        <li>Konversi Planned Order menjadi <strong>Production Order</strong> (<code>CO01</code>), Goods Issue bahan baku ke produksi (<code>MIGO</code>), konfirmasi hasil produksi (<code>CO11N</code>), dan GR ke gudang produk jadi</li>
+        <li>Pelatihan user produksi untuk penggunaan transaksi harian PP</li>
+      </ol>
+
+      <h3 style="margin-top:1.25rem;">Solusi &amp; Integrasi MM-PP</h3>
+      <ul>
+        <li>MRP otomatis menghasilkan <strong>Purchase Requisition</strong> untuk bahan baku impor (melamin powder) dengan memperhitungkan lead time pengadaan 21 hari</li>
+        <li>Stok bahan baku tersinkronisasi real-time antara gudang dan lantai produksi melalui movement type yang dikonfigurasi</li>
+        <li>Production Order secara otomatis menarik kebutuhan bahan baku dari BOM &mdash; tidak ada lagi perhitungan manual per batch</li>
+        <li>Laporan <strong>MB52</strong> digunakan warehouse untuk monitoring stok harian; <strong>COOIS</strong> digunakan supervisor produksi untuk memantau status order</li>
+      </ul>
+
+      <h3 style="margin-top:1.25rem;">Hasil</h3>
+      <table>
+        <tr><th>Area</th><th>Sebelum</th><th>Sesudah</th></tr>
+        <tr><td>Visibilitas stok</td><td>Spreadsheet, update manual harian</td><td>Real-time di semua storage location</td></tr>
+        <tr><td>Proses PO</td><td>Manual via email, rata-rata 3 hari</td><td>Digital end-to-end, rata-rata 1 hari</td></tr>
+        <tr><td>Penghitungan BOM</td><td>Manual oleh supervisor per batch</td><td>Otomatis dari BOM SAP per Production Order</td></tr>
+        <tr><td>Ketersediaan bahan baku</td><td>Sering shortage mendadak saat produksi</td><td>MRP memberi sinyal kebutuhan 3 minggu sebelumnya</td></tr>
+        <tr><td>Akurasi stok</td><td>Selisih stok fisik vs catatan &gt;5%</td><td>Selisih &lt;1% setelah go-live 3 bulan</td></tr>
+      </table>
+    </div>
+    <p class="note">* Beberapa detail operasional telah disamarkan untuk menjaga kerahasiaan data perusahaan.</p>
+  </section>
+
+</main>
+
+<footer>
+  <p>Farel Gunawan &mdash; SAP MM &amp; PP Portfolio &mdash; 2026</p>
+</footer>
+
+</body>
+</html>
