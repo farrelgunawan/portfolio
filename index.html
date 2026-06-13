@@ -1,1221 +1,561 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Operations Portfolio — Farrel Gunawan</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farrel Gunawan | Data Analyst Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  :root {
-    --bg: #F7F6F3;
-    --surface: #FFFFFF;
-    --surface2: #F0EEE9;
-    --border: #E2DED7;
-    --text-primary: #1A1917;
-    --text-secondary: #6B6860;
-    --text-muted: #9E9C97;
-    --accent: #1A6B4A;
-    --accent-light: #E8F4EF;
-    --accent2: #C8440A;
-    --accent2-light: #FDF0EB;
-    --mono: 'IBM Plex Mono', monospace;
-    --sans: 'Inter', sans-serif;
-  }
-
-  @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #141412;
-      --surface: #1E1D1A;
-      --surface2: #252420;
-      --border: #2E2C28;
-      --text-primary: #F0EDE8;
-      --text-secondary: #9E9A93;
-      --text-muted: #6B6860;
-      --accent: #3EBD7A;
-      --accent-light: #0D2B1E;
-      --accent2: #F07040;
-      --accent2-light: #2B1508;
+      --navy:  #1F3864;
+      --blue:  #2E75B6;
+      --green: #70AD47;
+      --orange:#ED7D31;
+      --gray:  #595959;
+      --light: #F5F7FA;
+      --white: #FFFFFF;
+      --border:#E2E8F0;
     }
-  }
 
-  body {
-    font-family: var(--sans);
-    background: var(--bg);
-    color: var(--text-primary);
-    font-size: 15px;
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-  }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--light);
+      color: var(--gray);
+      line-height: 1.6;
+    }
 
-  /* NAV */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 52px;
-  }
-  .nav-name {
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    color: var(--text-primary);
-    text-decoration: none;
-  }
-  .nav-links {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-  }
-  .nav-links a {
-    font-size: 13px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    transition: color 0.15s;
-  }
-  .nav-links a:hover { color: var(--text-primary); }
+    /* ===== NAVBAR ===== */
+    nav {
+      background: var(--navy);
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav .logo {
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    nav .logo span { color: #BDD7EE; }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+    nav ul a {
+      color: #BDD7EE;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    nav ul a:hover { color: white; }
 
-  /* HERO */
-  .hero {
-    max-width: 780px;
-    margin: 0 auto;
-    padding: 5rem 2rem 4rem;
-  }
-  .hero-eyebrow {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 1.25rem;
-  }
-  .hero h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    margin-bottom: 1.25rem;
-  }
-  .hero h1 span {
-    color: var(--accent);
-  }
-  .hero-sub {
-    font-size: 16px;
-    color: var(--text-secondary);
-    max-width: 560px;
-    margin-bottom: 2rem;
-  }
-  .hero-contact {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
-  .contact-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    text-decoration: none;
-    border: 1px solid var(--border);
-    padding: 0.45rem 0.9rem;
-    border-radius: 6px;
-    transition: all 0.15s;
-  }
-  .contact-link:hover {
-    color: var(--text-primary);
-    border-color: var(--text-secondary);
-    background: var(--surface);
-  }
-  .contact-link svg { width: 15px; height: 15px; flex-shrink: 0; }
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #2E4A7A 100%);
+      color: white;
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .hero .tagline {
+      font-size: 16px;
+      color: #BDD7EE;
+      margin-bottom: 24px;
+      letter-spacing: 0.3px;
+    }
+    .hero .tags {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .hero .tag {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .hero .links {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+    }
+    .btn {
+      padding: 10px 24px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-primary {
+      background: var(--blue);
+      color: white;
+      border: 2px solid var(--blue);
+    }
+    .btn-primary:hover { background: #1a5a9e; border-color: #1a5a9e; }
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.4);
+    }
+    .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
 
-  /* PROJECT INDEX */
-  .project-index {
-    max-width: 780px;
-    margin: 0 auto 2rem;
-    padding: 0 2rem;
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .proj-tag {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-  }
-  .proj-pill {
-    font-size: 12px;
-    color: var(--text-secondary);
-    border: 1px solid var(--border);
-    padding: 0.3rem 0.75rem;
-    border-radius: 20px;
-    text-decoration: none;
-    transition: all 0.15s;
-  }
-  .proj-pill:hover { color: var(--text-primary); border-color: var(--text-secondary); }
+    /* ===== SECTION ===== */
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 40px;
+    }
+    .section-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .section-subtitle {
+      font-size: 14px;
+      color: #8899AA;
+      margin-bottom: 36px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--border);
+    }
 
-  /* DIVIDER */
-  .divider {
-    max-width: 780px;
-    margin: 0 auto 4rem;
-    padding: 0 2rem;
-    border: none;
-    border-top: 1px solid var(--border);
-  }
+    /* ===== ABOUT ===== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .about-text p {
+      margin-bottom: 14px;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    .about-text strong { color: var(--navy); }
+    .skills-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .skill-row label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+    .skill-bar {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .skill-bar .fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--navy), var(--blue));
+      border-radius: 4px;
+      transition: width 1s ease;
+    }
 
-  /* SECTION LAYOUT */
-  .section {
-    max-width: 780px;
-    margin: 0 auto 6rem;
-    padding: 0 2rem;
-  }
+    /* ===== PROJECTS ===== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .project-card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .project-card:hover { box-shadow: 0 8px 32px rgba(31,56,100,0.12); }
+    .project-card.featured {
+      border-color: var(--blue);
+      border-width: 2px;
+    }
+    .project-card .card-img {
+      width: 100%;
+      max-height: 380px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-body {
+      padding: 28px;
+    }
+    .card-body .badge {
+      display: inline-block;
+      background: #EBF3FB;
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-featured {
+      background: #FFF3E0 !important;
+      color: var(--orange) !important;
+    }
+    .card-body h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .card-body p {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .card-metrics {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .metric {
+      text-align: center;
+      background: var(--light);
+      border-radius: 8px;
+      padding: 10px 18px;
+      min-width: 80px;
+    }
+    .metric .val {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+      display: block;
+    }
+    .metric .lbl {
+      font-size: 11px;
+      color: #8899AA;
+      font-weight: 500;
+    }
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .card-tag {
+      background: #F0F4F8;
+      color: var(--gray);
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-weight: 500;
+    }
+    .card-footer {
+      display: flex;
+      gap: 12px;
+    }
+    .btn-sm {
+      padding: 8px 18px;
+      font-size: 13px;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 2px solid var(--navy);
+      color: var(--navy);
+      transition: all 0.2s;
+    }
+    .btn-sm:hover {
+      background: var(--navy);
+      color: white;
+    }
+    .btn-sm.solid {
+      background: var(--navy);
+      color: white;
+    }
+    .btn-sm.solid:hover { background: #162b52; }
 
-  .section-header {
-    margin-bottom: 2.5rem;
-  }
-  .section-num {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    margin-bottom: 0.5rem;
-  }
-  .section-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    margin-bottom: 0.4rem;
-  }
-  .section-meta {
-    font-size: 13px;
-    color: var(--text-muted);
-    font-family: var(--mono);
-  }
+    /* Coming soon card */
+    .coming-soon {
+      background: white;
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      color: #AABBCC;
+    }
+    .coming-soon h3 { color: #CCDDEE; font-size: 18px; margin-bottom: 8px; }
 
-  /* KPI GRID */
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 2.5rem;
-  }
-  .kpi-cell {
-    background: var(--surface);
-    padding: 1.25rem 1.25rem 1rem;
-  }
-  .kpi-label {
-    font-size: 11px;
-    font-family: var(--mono);
-    color: var(--text-muted);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-  }
-  .kpi-row {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 0.3rem;
-  }
-  .kpi-before {
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    text-decoration: line-through;
-    text-decoration-color: var(--border);
-  }
-  .kpi-after {
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-  .kpi-delta {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 500;
-    padding: 2px 7px;
-    border-radius: 4px;
-    margin-top: 0.25rem;
-  }
-  .delta-good { background: var(--accent-light); color: var(--accent); }
-  .delta-bad-good { background: var(--accent2-light); color: var(--accent2); }
+    /* ===== EXPERIENCE ===== */
+    .timeline { display: flex; flex-direction: column; gap: 20px; }
+    .timeline-item {
+      background: white;
+      border-radius: 10px;
+      border-left: 4px solid var(--navy);
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .timeline-item .role {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .timeline-item .company {
+      font-size: 13px;
+      color: var(--blue);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .timeline-item .period {
+      font-size: 12px;
+      color: #AABBCC;
+      margin-bottom: 8px;
+    }
+    .timeline-item p {
+      font-size: 13px;
+      line-height: 1.65;
+    }
 
-  /* CHARTS ROW */
-  .charts-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 2.5rem;
-  }
-  .chart-cell {
-    background: var(--surface);
-    padding: 1.25rem;
-  }
-  .chart-cell.full-width {
-    grid-column: 1 / -1;
-  }
-  .chart-label {
-    font-size: 11px;
-    font-family: var(--mono);
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 1rem;
-  }
-  .chart-legend {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 0.75rem;
-    flex-wrap: wrap;
-  }
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    color: var(--text-secondary);
-  }
-  .legend-dot {
-    width: 8px; height: 8px;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-  @media (max-width: 560px) {
-    .charts-row { grid-template-columns: 1fr; }
-    .chart-cell.full-width { grid-column: 1; }
-  }
+    /* ===== CONTACT ===== */
+    .contact-bar {
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      padding: 48px 40px;
+    }
+    .contact-bar h2 { font-size: 24px; margin-bottom: 8px; }
+    .contact-bar p { color: #BDD7EE; font-size: 14px; margin-bottom: 24px; }
+    .contact-links {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
-  /* DMAIC */
-  .dmaic-wrap {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 2.5rem;
-  }
-  .dmaic-step {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    border-bottom: 1px solid var(--border);
-  }
-  .dmaic-step:last-child { border-bottom: none; }
-  .dmaic-code {
-    background: var(--surface2);
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    border-right: 1px solid var(--border);
-  }
-  .dmaic-letter {
-    font-family: var(--mono);
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--accent);
-    line-height: 1;
-  }
-  .dmaic-phase {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
-    font-family: var(--mono);
-  }
-  .dmaic-content {
-    padding: 1.25rem;
-  }
-  .dmaic-summary {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-primary);
-    margin-bottom: 0.75rem;
-  }
-  .dmaic-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-  .dmaic-list li {
-    font-size: 13px;
-    color: var(--text-secondary);
-    padding-left: 1rem;
-    position: relative;
-  }
-  .dmaic-list li::before {
-    content: '–';
-    position: absolute;
-    left: 0;
-    color: var(--text-muted);
-  }
-  @media (max-width: 560px) {
-    .dmaic-step { grid-template-columns: 1fr; }
-    .dmaic-code { border-right: none; border-bottom: 1px solid var(--border); flex-direction: row; align-items: center; gap: 0.75rem; }
-  }
+    /* ===== FOOTER ===== */
+    footer {
+      background: #0F1E3A;
+      color: #667788;
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+    }
 
-  /* ROOT CAUSE */
-  .rc-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 2.5rem;
-  }
-  .rc-cell {
-    background: var(--surface);
-    padding: 1.25rem;
-  }
-  .rc-num {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--accent2);
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .rc-text {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
-  /* SHIFT CASE: COMPARISON TABLE */
-  .shift-compare {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 2.5rem;
-  }
-  .shift-compare table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-  .shift-compare thead th {
-    background: var(--surface2);
-    padding: 0.85rem 1rem;
-    text-align: left;
-    font-family: var(--mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border);
-    font-weight: 400;
-  }
-  .shift-compare thead th:not(:first-child) { text-align: right; }
-  .shift-compare tbody td {
-    padding: 0.85rem 1rem;
-    border-bottom: 1px solid var(--border);
-    color: var(--text-secondary);
-    vertical-align: middle;
-  }
-  .shift-compare tbody tr:last-child td { border-bottom: none; }
-  .shift-compare tbody td:first-child { color: var(--text-primary); font-weight: 500; }
-  .shift-compare tbody td:not(:first-child) { text-align: right; font-family: var(--mono); }
-  .td-before { color: var(--text-muted) !important; }
-  .td-after { color: var(--text-primary) !important; }
-  .td-delta-good { color: var(--accent) !important; }
-
-  /* INTERVENTION STEPS */
-  .steps-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 2.5rem;
-  }
-  .step-item {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-    align-items: flex-start;
-  }
-  .step-item:last-child { border-bottom: none; }
-  .step-n {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    min-width: 28px;
-    padding-top: 2px;
-    letter-spacing: 0.06em;
-  }
-  .step-text {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-  .step-text strong { color: var(--text-primary); font-weight: 500; }
-
-  /* RESULT STRIP */
-  .result-strip {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 2.5rem;
-  }
-  .result-cell {
-    background: var(--surface);
-    padding: 1.25rem;
-    text-align: center;
-  }
-  .result-num {
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: -0.02em;
-    line-height: 1;
-    margin-bottom: 0.35rem;
-  }
-  .result-label {
-    font-size: 11px;
-    font-family: var(--mono);
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    line-height: 1.5;
-  }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 2rem;
-    text-align: center;
-    font-size: 12px;
-    color: var(--text-muted);
-    font-family: var(--mono);
-  }
-</style>
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 28px; }
+      nav ul { display: none; }
+    }
+  </style>
 </head>
 <body>
 
+<!-- NAVBAR -->
 <nav>
-  <a class="nav-name" href="#">Farrel Gunawan</a>
-  <ul class="nav-links">
-    <li><a href="#project-1">Project 1</a></li>
-    <li><a href="#project-2">Project 2</a></li>
-    <li><a href="#project-3">Project 3</a></li>
+  <div class="logo">Farrel <span>Gunawan</span></div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
-<header class="hero">
-  <p class="hero-eyebrow">Operations Portfolio</p>
-  <h1>Turning production data<br>into <span>measurable results</span></h1>
-  <p class="hero-sub">Production Planning &amp; Performance Manager with a background in industrial engineering and data analytics. These case studies document real improvement projects — with real numbers.</p>
-  <div class="hero-contact" id="contact">
-    <a class="contact-link" href="https://www.linkedin.com/in/farrel-gunawan/" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-      LinkedIn — Farrel Gunawan
-    </a>
+<!-- HERO -->
+<div class="hero">
+  <h1>FARREL GUNAWAN</h1>
+  <p class="tagline">Data Analyst &nbsp;|&nbsp; Manufacturing Analytics &nbsp;|&nbsp; Business Intelligence</p>
+  <div class="tags">
+    <span class="tag">SQL</span>
+    <span class="tag">Python</span>
+    <span class="tag">Power BI</span>
+    <span class="tag">Tableau</span>
+    <span class="tag">Six Sigma Green Belt</span>
+    <span class="tag">4+ Years Experience</span>
   </div>
-</header>
-
-<div class="project-index">
-  <span class="proj-tag">Case studies ·</span>
-  <a class="proj-pill" href="#project-1">01 — Six Sigma DMAIC · Production Output</a>
-  <a class="proj-pill" href="#project-2">02 — Workforce Rebalancing · Shift Equity</a>
-  <a class="proj-pill" href="#project-3">03 — SAP MM &amp; PP · ERP Implementation</a>
+  <div class="links">
+    <a href="https://linkedin.com/in/farrelgunawan" class="btn btn-primary" target="_blank">LinkedIn</a>
+    <a href="https://github.com/farrelgunawan" class="btn btn-outline" target="_blank">GitHub</a>
+    <a href="#contact" class="btn btn-outline">Contact Me</a>
+  </div>
 </div>
 
-<hr class="divider">
-
-<!-- ═══════════════════════════════════════════════
-     PROJECT 1 — DMAIC PRODUCTION IMPROVEMENT
-═══════════════════════════════════════════════ -->
-<section class="section" id="project-1">
-
-  <div class="section-header">
-    <p class="section-num">Project 01 · Production Operations</p>
-    <h2 class="section-title">Six Sigma DMAIC — Production Performance</h2>
-    <p class="section-meta">PT. Prima Jaya Fenolik Melamin · Melamine Tableware · Oct 2024 → Jan 2025</p>
-  </div>
-
-  <!-- KPIs -->
-  <div class="kpi-grid">
-    <div class="kpi-cell">
-      <p class="kpi-label">Avg daily output</p>
-      <div class="kpi-row">
-        <span class="kpi-before">~25,000</span>
-        <span class="kpi-after">~30,200</span>
-        <span style="font-size:11px;color:var(--text-muted);">pcs</span>
-      </div>
-      <span class="kpi-delta delta-good">+20%</span>
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-title">About Me</div>
+  <div class="section-subtitle">Data Analyst with manufacturing domain expertise</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a <strong>Data Analyst</strong> with 4+ years of hands-on experience translating complex operational data into actionable business insights.</p>
+      <p>My background sits at the intersection of <strong>data analytics and manufacturing operations</strong> — which means I don't just build dashboards, I understand the domain behind the numbers.</p>
+      <p>I've used SQL, Python, Power BI, and Tableau to build end-to-end analytics solutions: from automated data pipelines and real-time KPI dashboards to structured root cause analyses that drove measurable outcomes.</p>
+      <p>Currently open to <strong>Data Analyst opportunities</strong> — especially in manufacturing analytics, business intelligence, and operations analytics.</p>
     </div>
-    <div class="kpi-cell">
-      <p class="kpi-label">Defect rate</p>
-      <div class="kpi-row">
-        <span class="kpi-before">15–20%</span>
-        <span class="kpi-after">9–14%</span>
+    <div class="skills-grid">
+      <div class="skill-row">
+        <label><span>SQL</span><span>90%</span></label>
+        <div class="skill-bar"><div class="fill" style="width:90%"></div></div>
       </div>
-      <span class="kpi-delta delta-good">−6 pp</span>
-    </div>
-    <div class="kpi-cell">
-      <p class="kpi-label">Avg downtime / day</p>
-      <div class="kpi-row">
-        <span class="kpi-before">~5.0 hrs</span>
-        <span class="kpi-after">~4.5 hrs</span>
+      <div class="skill-row">
+        <label><span>Python</span><span>80%</span></label>
+        <div class="skill-bar"><div class="fill" style="width:80%"></div></div>
       </div>
-      <span class="kpi-delta delta-good">−10%</span>
-    </div>
-    <div class="kpi-cell">
-      <p class="kpi-label">OEE</p>
-      <div class="kpi-row">
-        <span class="kpi-before">63%</span>
-        <span class="kpi-after">73%</span>
+      <div class="skill-row">
+        <label><span>Power BI</span><span>85%</span></label>
+        <div class="skill-bar"><div class="fill" style="width:85%"></div></div>
       </div>
-      <span class="kpi-delta delta-good">+10 pp</span>
-    </div>
-  </div>
-
-  <!-- Charts row -->
-  <div class="charts-row">
-    <div class="chart-cell full-width">
-      <p class="chart-label">Daily output (pcs) — before vs after DMAIC</p>
-      <div class="chart-legend">
-        <span class="legend-item"><span class="legend-dot" style="background:#9E9A93;"></span>Before (Aug–Sep 2024)</span>
-        <span class="legend-item"><span class="legend-dot" style="background:#1A6B4A;"></span>After (Nov 2024–Jan 2025)</span>
-        <span class="legend-item"><span class="legend-dot" style="background:#C8440A; border-radius:0; height:2px;"></span>Target</span>
+      <div class="skill-row">
+        <label><span>Tableau</span><span>80%</span></label>
+        <div class="skill-bar"><div class="fill" style="width:80%"></div></div>
       </div>
-      <div style="position:relative;width:100%;height:220px;">
-        <canvas id="outputChart" role="img" aria-label="Bar chart comparing daily production output before and after DMAIC. Before avg 25000 pcs, after avg 30200 pcs, target 30000.">Before avg ~25,000 pcs/day; after avg ~30,200 pcs/day; target 30,000 pcs/day.</canvas>
+      <div class="skill-row">
+        <label><span>Data Analysis & Visualization</span><span>88%</span></label>
+        <div class="skill-bar"><div class="fill" style="width:88%"></div></div>
       </div>
-    </div>
-    <div class="chart-cell">
-      <p class="chart-label">Defect rate (%) — monthly</p>
-      <div class="chart-legend">
-        <span class="legend-item"><span class="legend-dot" style="background:#C8440A;"></span>Defect rate</span>
-      </div>
-      <div style="position:relative;width:100%;height:180px;">
-        <canvas id="defectChart" role="img" aria-label="Line chart of monthly defect rate. Aug 17%, Sep 16%, Oct improvement, Nov 12%, Dec 11%, Jan 10%.">Defect rate dropped from 15–20% range to 9–14% range after October 2024 interventions.</canvas>
-      </div>
-    </div>
-    <div class="chart-cell">
-      <p class="chart-label">OEE (%) — monthly</p>
-      <div class="chart-legend">
-        <span class="legend-item"><span class="legend-dot" style="background:#1A6B4A;"></span>OEE</span>
-      </div>
-      <div style="position:relative;width:100%;height:180px;">
-        <canvas id="oeeChart" role="img" aria-label="Line chart showing OEE improvement from 63% baseline to 73% after DMAIC interventions.">OEE improved from 63% baseline (Aug–Sep 2024) to 73% (Jan 2025).</canvas>
+      <div class="skill-row">
+        <label><span>Statistical Analysis</span><span>75%</span></label>
+        <div class="skill-bar"><div class="fill" style="width:75%"></div></div>
       </div>
     </div>
   </div>
-
-  <!-- Root Causes -->
-  <div class="rc-grid">
-    <div class="rc-cell">
-      <p class="rc-num">Root cause 01</p>
-      <p class="rc-text">Operators adjusting machine parameters independently — no standardized settings per product type</p>
-    </div>
-    <div class="rc-cell">
-      <p class="rc-num">Root cause 02</p>
-      <p class="rc-text">Inconsistent SOP compliance across shifts — process execution varied by operator and shift team</p>
-    </div>
-    <div class="rc-cell">
-      <p class="rc-num">Root cause 03</p>
-      <p class="rc-text">Incoming raw material quality varied across batches from the same supplier</p>
-    </div>
-  </div>
-
-  <!-- DMAIC -->
-  <div class="dmaic-wrap">
-    <div class="dmaic-step">
-      <div class="dmaic-code">
-        <span class="dmaic-letter">D</span>
-        <span class="dmaic-phase">Define</span>
-      </div>
-      <div class="dmaic-content">
-        <p class="dmaic-summary">Problem scoping — high defect rate and below-target output</p>
-        <ul class="dmaic-list">
-          <li>Defined scope: defect reduction and output improvement across 70 machines, 2 shifts</li>
-          <li>Set targets: defect rate below 15%, output consistently ≥30,000 pcs/day</li>
-        </ul>
-      </div>
-    </div>
-    <div class="dmaic-step">
-      <div class="dmaic-code">
-        <span class="dmaic-letter">M</span>
-        <span class="dmaic-phase">Measure</span>
-      </div>
-      <div class="dmaic-content">
-        <p class="dmaic-summary">Established baseline metrics before any changes were made</p>
-        <ul class="dmaic-list">
-          <li>Collected daily output, defect type, and downtime data per machine and per shift</li>
-          <li>Tracked machine parameter settings across operators to identify variation patterns</li>
-          <li>Logged raw material batch quality on arrival to correlate with defect spikes</li>
-        </ul>
-      </div>
-    </div>
-    <div class="dmaic-step">
-      <div class="dmaic-code">
-        <span class="dmaic-letter">A</span>
-        <span class="dmaic-phase">Analyze</span>
-      </div>
-      <div class="dmaic-content">
-        <p class="dmaic-summary">Identified three primary drivers of defects and output loss</p>
-        <ul class="dmaic-list">
-          <li>Parameter deviation correlated directly with defect spikes on specific machines</li>
-          <li>SOP non-compliance varied significantly between shifts</li>
-          <li>Batch-to-batch material variation triggered unplanned defect increases</li>
-        </ul>
-      </div>
-    </div>
-    <div class="dmaic-step">
-      <div class="dmaic-code">
-        <span class="dmaic-letter">I</span>
-        <span class="dmaic-phase">Improve</span>
-      </div>
-      <div class="dmaic-content">
-        <p class="dmaic-summary">Four concrete interventions implemented, October 2024</p>
-        <ul class="dmaic-list">
-          <li>Standardized machine parameters per product type — operators prohibited from adjusting independently</li>
-          <li>Implemented incoming material quality inspection before raw material enters production floor</li>
-          <li>Rescheduled production priorities based on available material quality — low-quality batches deprioritized</li>
-          <li>Rebalanced operator composition across shifts to distribute senior operators more evenly (see Project 02)</li>
-        </ul>
-      </div>
-    </div>
-    <div class="dmaic-step">
-      <div class="dmaic-code">
-        <span class="dmaic-letter">C</span>
-        <span class="dmaic-phase">Control</span>
-      </div>
-      <div class="dmaic-content">
-        <p class="dmaic-summary">Monitoring systems to detect regression early</p>
-        <ul class="dmaic-list">
-          <li>Built real-time KPI dashboard in Power BI — tracking output, defect rate, downtime, and OEE daily; adopted by management as primary monitoring tool</li>
-          <li>Process documentation updated and aligned with ISO 9001:2015 to formalize parameter standards and material handling procedures</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="result-strip">
-    <div class="result-cell">
-      <p class="result-num">+20%</p>
-      <p class="result-label">Output increase<br>25k → 30.2k pcs/day</p>
-    </div>
-    <div class="result-cell">
-      <p class="result-num">−6pp</p>
-      <p class="result-label">Defect rate<br>15–20% → 9–14%</p>
-    </div>
-    <div class="result-cell">
-      <p class="result-num">−10%</p>
-      <p class="result-label">Downtime<br>5.0 → 4.5 hrs/day</p>
-    </div>
-    <div class="result-cell">
-      <p class="result-num">+10pp</p>
-      <p class="result-label">OEE improvement<br>63% → 73%</p>
-    </div>
-  </div>
-
 </section>
 
-<hr class="divider">
+<!-- PROJECTS -->
+<section id="projects" style="background:white; max-width:100%; padding: 60px 0;">
+  <div style="max-width:1100px; margin:0 auto; padding: 0 40px;">
+    <div class="section-title">Projects</div>
+    <div class="section-subtitle">Data analytics portfolio — end-to-end projects from data to insight</div>
+    <div class="projects-grid">
 
-<!-- ═══════════════════════════════════════════════
-     PROJECT 2 — SHIFT WORKFORCE REBALANCING
-═══════════════════════════════════════════════ -->
-<section class="section" id="project-2">
+      <!-- PROJECT 1: OEE -->
+      <div class="project-card featured">
+        <img
+          src="https://raw.githubusercontent.com/farrelgunawan/manufacturing-oee-dashboard/main/output/dashboard_preview.png"
+          alt="Manufacturing OEE Dashboard Preview"
+          class="card-img"
+          onerror="this.style.display='none'"
+        />
+        <div class="card-body">
+          <span class="badge badge-featured">⭐ Featured Project</span>
+          <h3>Manufacturing OEE Analytics Dashboard</h3>
+          <p>
+            End-to-end analytics project simulating a real Six Sigma DMAIC improvement initiative
+            at a manufacturing plant. Built a complete pipeline: data simulation, Python analysis,
+            and a 12-panel dashboard tracking OEE, defect rates, downtime causes, and shift
+            performance across 5 production lines and 2 shifts over 12 months.
+          </p>
+          <div class="card-metrics">
+            <div class="metric"><span class="val">+20%</span><span class="lbl">Output</span></div>
+            <div class="metric"><span class="val">-10%</span><span class="lbl">Downtime</span></div>
+            <div class="metric"><span class="val">+10pp</span><span class="lbl">OEE</span></div>
+            <div class="metric"><span class="val">3,660</span><span class="lbl">Records</span></div>
+            <div class="metric"><span class="val">12</span><span class="lbl">Charts</span></div>
+          </div>
+          <div class="card-tags">
+            <span class="card-tag">Python</span>
+            <span class="card-tag">Pandas</span>
+            <span class="card-tag">NumPy</span>
+            <span class="card-tag">Matplotlib</span>
+            <span class="card-tag">OEE Analytics</span>
+            <span class="card-tag">Six Sigma DMAIC</span>
+            <span class="card-tag">Manufacturing</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://github.com/farrelgunawan/manufacturing-oee-dashboard" class="btn-sm solid" target="_blank">View on GitHub</a>
+            <a href="https://github.com/farrelgunawan/manufacturing-oee-dashboard" class="btn-sm" target="_blank">See Code</a>
+          </div>
+        </div>
+      </div>
 
-  <div class="section-header">
-    <p class="section-num">Project 02 · Workforce Optimization</p>
-    <h2 class="section-title">Shift Rebalancing — Operator Composition</h2>
-    <p class="section-meta">PT. Prima Jaya Fenolik Melamin · July 2024 · Excel + Power BI + Manual Scheduling</p>
-  </div>
+      <!-- COMING SOON 2 -->
+      <div class="coming-soon">
+        <h3>🔧 Project 2 — Coming Soon</h3>
+        <p>E-commerce Seller Performance Analysis &nbsp;·&nbsp; SQL &amp; Python</p>
+      </div>
 
-  <p style="font-size:13px;color:var(--text-secondary);margin-bottom:2rem;padding:1rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;border-left:3px solid var(--accent);">
-    <strong style="color:var(--text-primary);font-weight:500;">Context:</strong> This project preceded the DMAIC initiative by three months. Shift output imbalance was one of the root causes surfaced later in the Analyze phase. Operator rebalancing was subsequently embedded as one of the four Improve-phase interventions in Project 01.
-  </p>
+      <!-- COMING SOON 3 -->
+      <div class="coming-soon">
+        <h3>🔧 Project 3 — Coming Soon</h3>
+        <p>Automated Data Pipeline &nbsp;·&nbsp; Python ETL</p>
+      </div>
 
-  <!-- KPIs -->
-  <div class="kpi-grid">
-    <div class="kpi-cell">
-      <p class="kpi-label">Shift 1 avg output</p>
-      <div class="kpi-row">
-        <span class="kpi-before">~11,000</span>
-        <span class="kpi-after">~14,500</span>
-        <span style="font-size:11px;color:var(--text-muted);">pcs</span>
-      </div>
-      <span class="kpi-delta delta-good">+32%</span>
-    </div>
-    <div class="kpi-cell">
-      <p class="kpi-label">Output gap (S1 vs S2)</p>
-      <div class="kpi-row">
-        <span class="kpi-before">~4,000</span>
-        <span class="kpi-after">~1,200</span>
-        <span style="font-size:11px;color:var(--text-muted);">pcs</span>
-      </div>
-      <span class="kpi-delta delta-good">−70%</span>
-    </div>
-    <div class="kpi-cell">
-      <p class="kpi-label">Overtime days / month</p>
-      <div class="kpi-row">
-        <span class="kpi-before">~2×</span>
-        <span class="kpi-after">0×</span>
-      </div>
-      <span class="kpi-delta delta-good">Eliminated</span>
-    </div>
-  </div>
-
-  <!-- Comparison table -->
-  <div class="shift-compare">
-    <table>
-      <thead>
-        <tr>
-          <th>Metric</th>
-          <th>Shift 1 — Before</th>
-          <th>Shift 1 — After</th>
-          <th>Shift 2 — Before</th>
-          <th>Shift 2 — After</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Senior operators</td>
-          <td class="td-before">5</td>
-          <td class="td-after td-delta-good">8</td>
-          <td class="td-before">12</td>
-          <td class="td-after">9</td>
-        </tr>
-        <tr>
-          <td>Avg output (pcs)</td>
-          <td class="td-before">~11,000</td>
-          <td class="td-after td-delta-good">~14,500</td>
-          <td class="td-before">~15,000</td>
-          <td class="td-after">~15,700</td>
-        </tr>
-        <tr>
-          <td>OT incidence</td>
-          <td class="td-before">~2× / month</td>
-          <td class="td-after td-delta-good">None</td>
-          <td class="td-before">Occasional</td>
-          <td class="td-after">None</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Chart: shift output before/after -->
-  <div class="charts-row">
-    <div class="chart-cell full-width">
-      <p class="chart-label">Output per shift — before vs after rebalancing</p>
-      <div class="chart-legend">
-        <span class="legend-item"><span class="legend-dot" style="background:#9E9A93;"></span>Before (Jun 2024)</span>
-        <span class="legend-item"><span class="legend-dot" style="background:#1A6B4A;"></span>After (Aug 2024)</span>
-      </div>
-      <div style="position:relative;width:100%;height:220px;">
-        <canvas id="shiftChart" role="img" aria-label="Grouped bar chart showing shift output before and after rebalancing. Shift 1 improved from 11000 to 14500 pcs. Shift 2 stayed around 15000-15700 pcs. Gap narrowed significantly.">Shift 1 output improved from ~11,000 to ~14,500 pcs. Shift 2 stable at ~15,000–15,700 pcs. Gap reduced from ~4,000 to ~1,200 pcs.</canvas>
-      </div>
-    </div>
-    <div class="chart-cell full-width">
-      <p class="chart-label">Senior operator distribution — before vs after</p>
-      <div class="chart-legend">
-        <span class="legend-item"><span class="legend-dot" style="background:#9E9A93;"></span>Before</span>
-        <span class="legend-item"><span class="legend-dot" style="background:#1A6B4A;"></span>After</span>
-      </div>
-      <div style="position:relative;width:100%;height:180px;">
-        <canvas id="seniorChart" role="img" aria-label="Grouped bar chart comparing senior operator distribution. Before: Shift 1 had 5, Shift 2 had 12. After: Shift 1 has 8, Shift 2 has 9.">Senior operator distribution: Before — S1: 5, S2: 12. After — S1: 8, S2: 9.</canvas>
-      </div>
     </div>
   </div>
-
-  <!-- Problem -->
-  <div class="rc-grid" style="margin-bottom:2rem;">
-    <div class="rc-cell">
-      <p class="rc-num">Problem 01</p>
-      <p class="rc-text">12 of 17 senior operators concentrated in Shift 2 — Shift 1 systematically underperforming</p>
-    </div>
-    <div class="rc-cell">
-      <p class="rc-num">Problem 02</p>
-      <p class="rc-text">Output gap of ~4,000 pcs/day between shifts was driving overtime to compensate for shortfall</p>
-    </div>
-    <div class="rc-cell">
-      <p class="rc-num">Problem 03</p>
-      <p class="rc-text">No formal criteria for shift assignment — composition had drifted informally over time</p>
-    </div>
-  </div>
-
-  <!-- Interventions -->
-  <ul class="steps-list">
-    <li class="step-item">
-      <span class="step-n">01</span>
-      <p class="step-text"><strong>Data-driven diagnosis.</strong> Mapped operator seniority against per-shift output data in Excel to quantify the imbalance. Identified that output variance tracked closely with senior-to-junior operator ratios.</p>
-    </li>
-    <li class="step-item">
-      <span class="step-n">02</span>
-      <p class="step-text"><strong>Rebalanced operator composition.</strong> Moved 3 senior operators from Shift 2 to Shift 1, targeting near-equal distribution (8 vs 9). Selection based on machine familiarity and product type expertise.</p>
-    </li>
-    <li class="step-item">
-      <span class="step-n">03</span>
-      <p class="step-text"><strong>Monitored output gap weekly.</strong> Tracked daily output per shift in Power BI for 4 weeks post-change. Shift 1 output rose to ~14,500 pcs/day; the inter-shift gap narrowed from ~4,000 to ~1,200 pcs.</p>
-    </li>
-    <li class="step-item">
-      <span class="step-n">04</span>
-      <p class="step-text"><strong>Overtime eliminated.</strong> With daily totals now meeting target without compensatory OT, scheduled overtime was removed entirely from August 2024 onwards.</p>
-    </li>
-  </ul>
-
-  <div class="result-strip">
-    <div class="result-cell">
-      <p class="result-num">+32%</p>
-      <p class="result-label">Shift 1 output<br>11k → 14.5k pcs</p>
-    </div>
-    <div class="result-cell">
-      <p class="result-num">−70%</p>
-      <p class="result-label">Shift output gap<br>4,000 → 1,200 pcs</p>
-    </div>
-    <div class="result-cell">
-      <p class="result-num">0×</p>
-      <p class="result-label">Overtime days<br>from 2× per month</p>
-    </div>
-  </div>
-
 </section>
 
-<hr class="divider">
-
-<section class="section" id="project3">
-  <div class="section-header">
-    <div class="section-num">Project 03 · ERP Implementation</div>
-    <h2 class="section-title">SAP MM &amp; PP — ERP Implementation</h2>
-    <div class="section-meta">PT. Prima Jaya Fenolik Melamin · Melamine Tableware Manufacturing · 2024–2025 · SAP S/4HANA</div>
-  </div>
-
-  <div class="kpi-grid">
-    <div class="kpi-cell">
-      <div class="kpi-label">Inventory accuracy</div>
-      <div class="kpi-row">
-        <span class="kpi-before">&gt;5%</span>
-        <span class="kpi-after">&lt;1%</span>
-        <span>variance</span>
-      </div>
-      <span class="kpi-delta delta-good">−4 pp</span>
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-title">Experience</div>
+  <div class="section-subtitle">4+ years across manufacturing analytics, export finance, and e-commerce</div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="role">Senior Manufacturing Data Analyst</div>
+      <div class="company">PT. Prima Jaya Fenolik Melamin</div>
+      <div class="period">August 2024 – Present &nbsp;·&nbsp; Jakarta, Indonesia</div>
+      <p>Led Six Sigma DMAIC data analysis project delivering +20% output, -10% downtime, and +10pp OEE. Built real-time Power BI dashboard adopted as primary KPI monitoring tool. Developed Python automation scripts for data collection and reporting pipelines.</p>
     </div>
-    <div class="kpi-cell">
-      <div class="kpi-label">PO lead time</div>
-      <div class="kpi-row">
-        <span class="kpi-before">3 days</span>
-        <span class="kpi-after">1 day</span>
-      </div>
-      <span class="kpi-delta delta-good">−67%</span>
+    <div class="timeline-item">
+      <div class="role">Manufacturing Data Analyst</div>
+      <div class="company">PT. Prima Jaya Fenolik Melamin</div>
+      <div class="period">September 2023 – August 2024 &nbsp;·&nbsp; Jakarta, Indonesia</div>
+      <p>Conducted shift performance data analysis identifying output variance drivers. Recommendations resulted in +32% Shift 1 output and elimination of scheduled overtime. Built inventory tracking reports and monthly analytical dashboards.</p>
     </div>
-    <div class="kpi-cell">
-      <div class="kpi-label">BOM calculation</div>
-      <div class="kpi-row">
-        <span class="kpi-before">Manual</span>
-        <span class="kpi-after">Automated</span>
-      </div>
-      <span class="kpi-delta delta-good">Eliminated</span>
+    <div class="timeline-item">
+      <div class="role">MIS and Data Analyst</div>
+      <div class="company">Lembaga Pembiayaan Ekspor Indonesia (LPEI)</div>
+      <div class="period">August 2022 – August 2023 &nbsp;·&nbsp; Jakarta, Indonesia</div>
+      <p>Maintained centralized SQL database for all management reporting. Built Tableau dashboards for senior management across Finance, Operations, and export financing divisions. Developed automated SQL-based financing and insurance data system replacing manual processes.</p>
     </div>
-    <div class="kpi-cell">
-      <div class="kpi-label">Material shortage</div>
-      <div class="kpi-row">
-        <span class="kpi-before">Frequent</span>
-        <span class="kpi-after">0×</span>
-      </div>
-      <span class="kpi-delta delta-good">MRP −21 days</span>
+    <div class="timeline-item">
+      <div class="role">Data Analyst Intern</div>
+      <div class="company">PT. Inovasi Sukses Sentosa (Indotrading.com)</div>
+      <div class="period">February 2022 – August 2022 &nbsp;·&nbsp; Jakarta, Indonesia</div>
+      <p>Built sales performance reports by product category and developed seller classification analysis using SQL and Excel to support sales strategy decisions.</p>
     </div>
   </div>
-
-  <div class="rc-grid">
-    <div class="rc-cell">
-      <div class="rc-num">Problem 01</div>
-      <div class="rc-text">Raw material procurement (melamine powder, resin, hardener) handled manually via email and phone — no structured PO audit trail or approval workflow</div>
-    </div>
-    <div class="rc-cell">
-      <div class="rc-num">Problem 02</div>
-      <div class="rc-text">Inventory levels tracked in disconnected spreadsheets — no real-time stock visibility between warehouse and production floor</div>
-    </div>
-    <div class="rc-cell">
-      <div class="rc-num">Problem 03</div>
-      <div class="rc-text">Raw material quantities per molding batch calculated manually by supervisors — no standardized BOM, prone to human error and material waste</div>
-    </div>
-    <div class="rc-cell">
-      <div class="rc-num">Problem 04</div>
-      <div class="rc-text">21-day import lead time for melamine powder not integrated into production scheduling — unplanned stoppages occurred when stock ran out</div>
-    </div>
-  </div>
-
-  <h3 style="font-size:1rem; font-weight:600; margin-bottom:1rem; color:var(--text-primary);">SAP MM — Materials Management</h3>
-  <ul class="steps-list">
-    <li class="step-item">
-      <span class="step-n">01</span>
-      <span class="step-text"><strong>Blueprinting &amp; requirement gathering.</strong> Mapped the end-to-end raw material procurement flow with procurement, warehouse, and finance teams to align SAP configuration with actual business processes at the tableware plant.</span>
-    </li>
-    <li class="step-item">
-      <span class="step-n">02</span>
-      <span class="step-text"><strong>Organizational Structure configuration.</strong> Set up Company Code, one Production Plant, and three Storage Locations — raw materials, WIP, and finished goods — reflecting the physical warehouse layout.</span>
-    </li>
-    <li class="step-item">
-      <span class="step-n">03</span>
-      <span class="step-text"><strong>Material Master creation <code>MM01</code>.</strong> Defined master data for all raw materials — melamine powder, resin, hardener, colorant, and release agent — including unit of measure, valuation class, and reorder points per material.</span>
-    </li>
-    <li class="step-item">
-      <span class="step-n">04</span>
-      <span class="step-text"><strong>Vendor Master <code>XK01</code> &amp; Info Records.</strong> Registered local suppliers and melamine powder importers; mapped preferred vendors per material via Source List to enforce purchasing standards.</span>
-    </li>
-    <li class="step-item">
-      <span class="step-n">05</span>
-      <span class="step-text"><strong>End-to-end Procure-to-Pay implementation.</strong> Configured full PR → PO → GR → Invoice Verification flow with Movement Types 101 and 261. Integrated with FI for payment processing. Conducted UAT with procurement and finance users prior to go-live.</span>
-    </li>
-  </ul>
-
-  <h3 style="font-size:1rem; font-weight:600; margin-bottom:1rem; color:var(--text-primary);">SAP PP — Production Planning</h3>
-  <ul class="steps-list">
-    <li class="step-item">
-      <span class="step-n">01</span>
-      <span class="step-text"><strong>Production process analysis.</strong> Mapped the full molding production flow — material preparation, compression molding, trimming &amp; finishing, quality inspection, and packaging — as the foundation for PP master data and configuration.</span>
-    </li>
-    <li class="step-item">
-      <span class="step-n">02</span>
-      <span class="step-text"><strong>Work Center setup <code>CR01</code>.</strong> Defined work centers for each production station: Mixing &amp; Preparation, Molding Press Lines (70 machines across 2 shifts), Trimming &amp; Finishing, and Packaging — with standard capacity and operation times per station.</span>
-    </li>
-    <li class="step-item">
-      <span class="step-n">03</span>
-      <span class="step-text"><strong>Bill of Materials creation <code>CS01</code>.</strong> Built BOMs for each product category — plates, bowls, cups, and serving sets — defining the precise raw material composition (melamine powder, resin, hardener, colorant) per production batch.</span>
-    </li>
-    <li class="step-item">
-      <span class="step-n">04</span>
-      <span class="step-text"><strong>Routing <code>CA01</code> &amp; Production Version.</strong> Defined operation sequences and standard processing times per batch; linked each BOM and Routing into a Production Version per product type to standardize the manufacturing process.</span>
-    </li>
-    <li class="step-item">
-      <span class="step-n">05</span>
-      <span class="step-text"><strong>MRP execution <code>MD01</code> &amp; Production Order management.</strong> Configured and ran weekly MRP to generate Planned Orders with a 21-day import buffer for melamine powder. Converted to Production Orders <code>CO01</code>, executed Goods Issue to production, confirmed output via <code>CO11N</code>, and posted GR for finished goods. Delivered hands-on user training for daily PP transactions.</span>
-    </li>
-  </ul>
-
-  <div class="result-strip">
-    <div class="result-cell">
-      <div class="result-num">&lt;1%</div>
-      <div class="result-label">Inventory variance<br>down from &gt;5%</div>
-    </div>
-    <div class="result-cell">
-      <div class="result-num">−67%</div>
-      <div class="result-label">PO lead time<br>3 days → 1 day</div>
-    </div>
-    <div class="result-cell">
-      <div class="result-num">−21d</div>
-      <div class="result-label">Early procurement signal<br>via MRP import buffer</div>
-    </div>
-    <div class="result-cell">
-      <div class="result-num">0×</div>
-      <div class="result-label">Material shortages<br>post go-live</div>
-    </div>
-  </div>
-
 </section>
+
+<!-- CONTACT -->
+<div class="contact-bar" id="contact">
+  <h2>Let's Connect</h2>
+  <p>Open to Data Analyst opportunities — especially in Malaysia and Southeast Asia</p>
+  <div class="contact-links">
+    <a href="mailto:farelgunawan48@gmail.com" class="btn btn-primary">✉ farelgunawan48@gmail.com</a>
+    <a href="https://linkedin.com/in/farrelgunawan" class="btn btn-outline" target="_blank">LinkedIn</a>
+    <a href="https://github.com/farrelgunawan" class="btn btn-outline" target="_blank">GitHub</a>
+  </div>
+</div>
 
 <footer>
-  Farrel Gunawan · Production Operations Manager · Jakarta, Indonesia
+  © 2024 Farrel Gunawan · Data Analyst · Jakarta, Indonesia
 </footer>
-
-<script>
-const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
-const tickColor = isDark ? '#6B6860' : '#9E9C97';
-const accent = '#1A6B4A';
-const accentLight = isDark ? 'rgba(26,107,74,0.25)' : 'rgba(26,107,74,0.12)';
-const muted = isDark ? '#6B6860' : '#9E9A93';
-const accent2 = '#C8440A';
-
-const baseOpts = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
-  scales: {
-    x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 11, family: 'IBM Plex Mono' } } },
-    y: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 11, family: 'IBM Plex Mono' } } }
-  }
-};
-
-// Output chart
-new Chart(document.getElementById('outputChart'), {
-  type: 'bar',
-  data: {
-    labels: ['Aug', 'Sep', 'Nov', 'Dec', 'Jan'],
-    datasets: [
-      {
-        label: 'Before',
-        data: [24800, 25200, null, null, null],
-        backgroundColor: muted,
-        borderRadius: 3
-      },
-      {
-        label: 'After',
-        data: [null, null, 29800, 30400, 30500],
-        backgroundColor: accent,
-        borderRadius: 3
-      },
-      {
-        label: 'Target',
-        data: [30000, 30000, 30000, 30000, 30000],
-        type: 'line',
-        borderColor: accent2,
-        borderDash: [5,3],
-        borderWidth: 1.5,
-        pointRadius: 0,
-        fill: false
-      }
-    ]
-  },
-  options: {
-    ...baseOpts,
-    scales: {
-      ...baseOpts.scales,
-      y: {
-        ...baseOpts.scales.y,
-        min: 22000,
-        ticks: { ...baseOpts.scales.y.ticks, callback: v => (v/1000).toFixed(0) + 'k' }
-      }
-    }
-  }
-});
-
-// Defect chart
-new Chart(document.getElementById('defectChart'), {
-  type: 'line',
-  data: {
-    labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
-    datasets: [{
-      label: 'Defect rate',
-      data: [17, 16, 15, 12, 11, 10],
-      borderColor: accent2,
-      backgroundColor: 'rgba(200,68,10,0.08)',
-      borderWidth: 2,
-      pointRadius: 3,
-      pointBackgroundColor: accent2,
-      fill: true,
-      tension: 0.3
-    }]
-  },
-  options: {
-    ...baseOpts,
-    scales: {
-      ...baseOpts.scales,
-      y: {
-        ...baseOpts.scales.y,
-        min: 0,
-        max: 25,
-        ticks: { ...baseOpts.scales.y.ticks, callback: v => v + '%' }
-      }
-    }
-  }
-});
-
-// OEE chart
-new Chart(document.getElementById('oeeChart'), {
-  type: 'line',
-  data: {
-    labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
-    datasets: [{
-      label: 'OEE',
-      data: [63, 63, 65, 69, 71, 73],
-      borderColor: accent,
-      backgroundColor: accentLight,
-      borderWidth: 2,
-      pointRadius: 3,
-      pointBackgroundColor: accent,
-      fill: true,
-      tension: 0.3
-    }]
-  },
-  options: {
-    ...baseOpts,
-    scales: {
-      ...baseOpts.scales,
-      y: {
-        ...baseOpts.scales.y,
-        min: 55,
-        max: 80,
-        ticks: { ...baseOpts.scales.y.ticks, callback: v => v + '%' }
-      }
-    }
-  }
-});
-
-// Shift output chart
-new Chart(document.getElementById('shiftChart'), {
-  type: 'bar',
-  data: {
-    labels: ['Shift 1', 'Shift 2'],
-    datasets: [
-      { label: 'Before', data: [11000, 15000], backgroundColor: muted, borderRadius: 3 },
-      { label: 'After', data: [14500, 15700], backgroundColor: accent, borderRadius: 3 }
-    ]
-  },
-  options: {
-    ...baseOpts,
-    scales: {
-      ...baseOpts.scales,
-      y: {
-        ...baseOpts.scales.y,
-        min: 0,
-        ticks: { ...baseOpts.scales.y.ticks, callback: v => (v/1000).toFixed(0) + 'k' }
-      }
-    }
-  }
-});
-
-// Senior distribution chart
-new Chart(document.getElementById('seniorChart'), {
-  type: 'bar',
-  data: {
-    labels: ['Shift 1', 'Shift 2'],
-    datasets: [
-      { label: 'Before', data: [5, 12], backgroundColor: muted, borderRadius: 3 },
-      { label: 'After', data: [8, 9], backgroundColor: accent, borderRadius: 3 }
-    ]
-  },
-  options: {
-    ...baseOpts,
-    scales: {
-      ...baseOpts.scales,
-      y: {
-        ...baseOpts.scales.y,
-        min: 0,
-        max: 15,
-        ticks: { ...baseOpts.scales.y.ticks, stepSize: 3 }
-      }
-    }
-  }
-});
-</script>
 
 </body>
 </html>
